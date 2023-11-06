@@ -19,14 +19,14 @@ constexpr float TIME_STEP = 0.01;
 constexpr int SCALE_FACTOR = 4;
 
 //fichier de l'échiquier
-constexpr char *BOARD_FILE = "assets/board_persp_05.png";
+constexpr char *BOARD_FILE = "assets/board.png";
 constexpr int BOARD_WIDTH = 142;
 constexpr int BOARD_HEIGHT = 142;
 
 //fichier des pièces
-constexpr char *PIECES_FILE_WHITE = "assets/WhitePiecesWood-Sheet.png";
-constexpr char *PIECES_FILE_BLACK = "assets/BlackPiecesWood-Sheet.png";
+constexpr char *PIECES_FILE_WHITE = "assets/WhitePieces.png";
+constexpr char *PIECES_FILE_BLACK = "assets/BlackPieces.png";
 constexpr int PIECES_WIDTH = 16;
-constexpr int PIECES_HEIGHT = 32;
+constexpr int PIECES_HEIGHT = 16;
 
 
