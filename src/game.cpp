@@ -9,7 +9,10 @@ Game::Game()
       timeStep(TIME_STEP),                               // Initialisation de timeStep
       window(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT), // Initialisation de window
       eventManager(),                                    // Initialisation de eventManager
-      board(Vector2f(0,0),window.loadTexture(BOARD_FILE),BOARD_WIDTH,BOARD_HEIGHT),              // Initialisation de board
+      board(
+        Vector2f(WINDOW_WIDTH / (2 * SCALE_FACTOR) - BOARD_WIDTH / 2, WINDOW_HEIGHT / (2 * SCALE_FACTOR) - BOARD_HEIGHT / 2),
+        window.loadTexture(BOARD_FILE),
+        BOARD_WIDTH,BOARD_HEIGHT),              // Initialisation de board
       renderManager(window,board),                    // Initialisation de renderManager
       updateManager(eventManager,board)                   // Initialisation de updateManager
 {

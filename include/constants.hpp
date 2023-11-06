@@ -7,7 +7,7 @@ constexpr char *WINDOW_TITLE = "Chess";
 
 // Dimensions de la fenêtre
 constexpr int WINDOW_HEIGHT = 720;
-constexpr int WINDOW_WIDTH = 720;
+constexpr int WINDOW_WIDTH = 1280;
 
 
 // Temps entre chaque frame de logique de jeu en secondes
