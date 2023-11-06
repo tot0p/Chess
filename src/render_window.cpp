@@ -68,6 +68,25 @@ void RenderWindow::render(Entity& p_entity)
     SDL_RenderCopy(renderer, p_entity.getTexture(), &src, &dst);
 }
 
+void RenderWindow::render(Entity *p_entity){
+    SDL_Rect dst;
+
+    Vector2f pos = p_entity->getPosition();
+
+    dst.x = pos.x *SCALE_FACTOR;
+    dst.y = pos.y *SCALE_FACTOR;
+    dst.w = p_entity->getCurrentFrame().w * SCALE_FACTOR;
+    dst.h = p_entity->getCurrentFrame().h * SCALE_FACTOR;
+
+    SDL_Rect src;
+    src.x = p_entity->getCurrentFrame().x;
+    src.y = p_entity->getCurrentFrame().y;
+    src.w = p_entity->getCurrentFrame().w;
+    src.h = p_entity->getCurrentFrame().h;
+
+    SDL_RenderCopy(renderer, p_entity->getTexture(), &src, &dst);
+}
+
 void RenderWindow::display()
 {
     SDL_RenderPresent(renderer);

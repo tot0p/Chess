@@ -15,6 +15,9 @@ Entity::Entity()
     currentFrame = {0, 0, 0, 0};
 }
 
+
+
+
 // Déplace l'entité
 void Entity::move(float dx, float dy)
 {

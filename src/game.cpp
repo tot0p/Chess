@@ -12,7 +12,8 @@ Game::Game()
       board(
         Vector2f(WINDOW_WIDTH / (2 * SCALE_FACTOR) - BOARD_WIDTH / 2, WINDOW_HEIGHT / (2 * SCALE_FACTOR) - BOARD_HEIGHT / 2),
         window.loadTexture(BOARD_FILE),
-        BOARD_WIDTH,BOARD_HEIGHT),              // Initialisation de board
+        BOARD_WIDTH,BOARD_HEIGHT,
+        window.loadTexture(PIECES_FILE)),              // Initialisation de board
       renderManager(window,board),                    // Initialisation de renderManager
       updateManager(eventManager,board)                   // Initialisation de updateManager
 {

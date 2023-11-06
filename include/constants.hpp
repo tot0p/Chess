@@ -22,10 +22,10 @@ constexpr int SCALE_FACTOR = 4;
 constexpr char *BOARD_FILE = "assets/board.png";
 constexpr int BOARD_WIDTH = 142;
 constexpr int BOARD_HEIGHT = 142;
+constexpr int BOARD_MARGIN = 7;
 
 //fichier des pièces
-constexpr char *PIECES_FILE_WHITE = "assets/WhitePieces.png";
-constexpr char *PIECES_FILE_BLACK = "assets/BlackPieces.png";
+constexpr char *PIECES_FILE = "assets/Pieces.png";
 constexpr int PIECES_WIDTH = 16;
 constexpr int PIECES_HEIGHT = 16;
 

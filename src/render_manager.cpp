@@ -8,5 +8,9 @@ void RenderManager::render()
 {
     window.clear();
     window.render(board);
+    for (auto &entity : board.getAllPieces())
+    {
+        window.render(entity);
+    }
     window.display();
 }

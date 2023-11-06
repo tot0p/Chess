@@ -16,6 +16,7 @@ public:
     void cleanUp(); // Nettoie la mémoire
     void clear(); // Efface le renderer
     void render(Entity& p_entity); // Affiche une texture
+    void render(Entity *p_entity); // Affiche une texture
     void display(); // Affiche le renderer
 
 
