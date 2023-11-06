@@ -8,5 +8,6 @@ UpdateManager::UpdateManager(EventManager &eventManager, Board &board) : eventMa
 
 void UpdateManager::update()
 {
+    board.update(eventManager);
 }
 

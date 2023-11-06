@@ -7,10 +7,6 @@ RenderManager::RenderManager(RenderWindow &window,Board &board) : window(window)
 void RenderManager::render()
 {
     window.clear();
-    window.render(board);
-    for (auto &entity : board.getAllPieces())
-    {
-        window.render(entity);
-    }
+    board.render(window);
     window.display();
 }

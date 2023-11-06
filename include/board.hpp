@@ -6,6 +6,9 @@
 #include "entity.hpp"
 #include "pieces/piece.hpp"
 
+#include "event_manager.hpp"
+#include "render_window.hpp"
+
 
 #include <list>
 
@@ -21,11 +24,20 @@ struct Case{
 
 class Board : public Entity{
     public:
-        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight, SDL_Texture* p_tileset);
+        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight, SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE);
 
-        list<pieces::Piece*> getAllPieces();
+
+        void update(EventManager &eventManager);
+
+        void render(RenderWindow &window);
 
     private:
+        pair<int,int> clickON(pair<int,int> mousePos);
+        list<pieces::Piece*> getAllPieces();
+
         Case cases[8][8] ;
+        Case* selectedCase = nullptr;
+
+        Entity selectedEntity;
 
 };

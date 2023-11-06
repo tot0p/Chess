@@ -7,9 +7,14 @@
 #include "pieces/queen.hpp"
 #include "pieces/king.hpp"
 
-Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset ) 
-        : Entity(pos, p_texture, frameWidth, frameHeight)
-{        
+#include <iostream>
+
+using namespace std;
+
+Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE ) 
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT)
+{       
+
     for(int i = 0; i < 8; i++)
     {
         for(int j = 0; j < 8; j++) 
@@ -67,4 +72,53 @@ list<pieces::Piece*> Board::getAllPieces() {
         }
     }
     return pieces;
+}
+
+
+void Board::update(EventManager &eventmanager) {
+    if (selectedCase == nullptr){
+        if (eventmanager.isLeftClick()){
+            pair<int,int> mousePos = eventmanager.getMousePosition();
+            cout << "Mouse : " << mousePos.first << " " << mousePos.second << endl;
+            pair<int,int> casePos = clickON(mousePos);
+            cout << "Case : " << casePos.first << " " << casePos.second << endl;
+            if (casePos.first != -1 && casePos.second != -1)
+            {
+                if (cases[casePos.first][casePos.second].piece != nullptr)
+                {
+                    selectedCase = &cases[casePos.first][casePos.second];
+                    selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
+                }
+            }
+        }
+    }
+    
+}
+
+void Board::render(RenderWindow &window) {
+    window.render(this);
+    if (selectedCase != nullptr)
+    {
+        window.render(&selectedEntity);
+    }
+
+    for (auto &entity : getAllPieces())
+    {
+        window.render(entity);
+    }
+}
+
+pair<int,int> Board::clickON(pair<int,int> mousePos){
+    Vector2f pos = getPosition();
+    int x = mousePos.first - pos.x *SCALE_FACTOR - BOARD_MARGIN *SCALE_FACTOR;
+    int y = mousePos.second - pos.y *SCALE_FACTOR - BOARD_MARGIN *SCALE_FACTOR;
+    cout << "x : " << x << " y : " << y << endl;
+    if (x < 0 || y < 0 || x > 8*PIECES_WIDTH*SCALE_FACTOR|| y > 8*PIECES_HEIGHT*SCALE_FACTOR)
+    {
+        return make_pair(-1,-1);
+    }
+    else
+    {
+        return make_pair(x/(PIECES_WIDTH*SCALE_FACTOR), y/(PIECES_HEIGHT*SCALE_FACTOR));
+    }
 }

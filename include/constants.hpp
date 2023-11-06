@@ -24,6 +24,11 @@ constexpr int BOARD_WIDTH = 142;
 constexpr int BOARD_HEIGHT = 142;
 constexpr int BOARD_MARGIN = 7;
 
+
+constexpr char *SELECTED_FILE = "assets/selected.png";
+constexpr int SELECTED_WIDTH = 16;
+constexpr int SELECTED_HEIGHT = 16;
+
 //fichier des pièces
 constexpr char *PIECES_FILE = "assets/Pieces.png";
 constexpr int PIECES_WIDTH = 16;
