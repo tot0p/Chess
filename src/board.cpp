@@ -1,5 +1,11 @@
 #include "board.hpp"
 #include "constants.hpp"
+#include "pieces/pawn.hpp"
+#include "pieces/knight.hpp"
+#include "pieces/bishop.hpp"
+#include "pieces/rook.hpp"
+#include "pieces/queen.hpp"
+#include "pieces/king.hpp"
 
 Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset ) 
         : Entity(pos, p_texture, frameWidth, frameHeight)
@@ -16,28 +22,28 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
                 {
                     if (i == 0 || i == 7)
                     {
-                        cases[i][j].piece = new pieces::Piece(2, j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
+                        cases[i][j].piece = new pieces::Rook( j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
                     }
                     else if (i == 1 || i == 6)
                     {
-                        cases[i][j].piece = new pieces::Piece(1, j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
+                        cases[i][j].piece = new pieces::Knight( j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
                     }
                     else if (i == 2 || i == 5)
                     {
-                        cases[i][j].piece = new pieces::Piece(3, j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
+                        cases[i][j].piece = new pieces::Bishop( j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
                     }
                     else if (i == 4)
                     {
-                        cases[i][j].piece = new pieces::Piece(5, j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
+                        cases[i][j].piece = new pieces::King( j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
                     }
                     else if (i == 3)
                     {
-                        cases[i][j].piece = new pieces::Piece(4, j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
+                        cases[i][j].piece = new pieces::Queen( j == 0 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
                     }
                 }
                 else
                 {
-                    cases[i][j].piece = new pieces::Piece(0, j == 1 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
+                    cases[i][j].piece = new pieces::Pawn( j == 1 ? pieces::PieceColor::BLACK : pieces::PieceColor::WHITE, p_tileset);
                 }
             }
             else
