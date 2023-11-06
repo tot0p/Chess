@@ -34,4 +34,6 @@ constexpr char *PIECES_FILE = "assets/Pieces.png";
 constexpr int PIECES_WIDTH = 16;
 constexpr int PIECES_HEIGHT = 16;
 
+constexpr char *GREEN_FILE = "assets/green.png";
+
 

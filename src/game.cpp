@@ -14,7 +14,8 @@ Game::Game()
         window.loadTexture(BOARD_FILE),
         BOARD_WIDTH,BOARD_HEIGHT,
         window.loadTexture(PIECES_FILE),
-        window.loadTexture(SELECTED_FILE)),              // Initialisation de board
+        window.loadTexture(SELECTED_FILE),
+        window.loadTexture(GREEN_FILE)),              // Initialisation de board
       renderManager(window,board),                    // Initialisation de renderManager
       updateManager(eventManager,board)                   // Initialisation de updateManager
 {

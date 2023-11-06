@@ -11,8 +11,8 @@
 
 using namespace std;
 
-Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE ) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT)
+Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE) 
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT)
 {       
 
     for(int i = 0; i < 8; i++)
@@ -101,6 +101,13 @@ void Board::render(RenderWindow &window) {
     {
         window.render(&selectedEntity);
     }
+    if (selectedCase != nullptr && selectedCase->piece != nullptr)
+    for (auto &moveElem : selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard()))
+    {
+        Vector2f pos = Vector2f(moveElem.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, moveElem.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN);
+        move.setPosition(pos);
+        window.render(move);
+    }
 
     for (auto &entity : getAllPieces())
     {
@@ -121,4 +128,38 @@ pair<int,int> Board::clickON(pair<int,int> mousePos){
     {
         return make_pair(x/(PIECES_WIDTH*SCALE_FACTOR), y/(PIECES_HEIGHT*SCALE_FACTOR));
     }
+}
+
+pieces::BoardLetter Board::getBoardLetter(){
+    pieces::BoardLetter boardLetter;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++) 
+        {
+            if(cases[i][j].piece != nullptr){
+                boardLetter.cases[i][j] = cases[i][j].piece->getLetter();
+            }
+            else
+            {
+                boardLetter.cases[i][j] = pieces::PieceLetter::EMPTY;
+            }
+        }
+    }
+    return boardLetter;
+}
+
+vector<vector<pieces::Piece*>> Board::getBoard() {
+    vector<vector<pieces::Piece*>> board;
+    for(int i = 0; i < 8; i++)
+    {
+        vector<pieces::Piece*> tmp;
+        for(int j = 0; j < 8; j++) 
+        {
+            cases[i][j].x = i;
+            cases[i][j].y = j;
+            tmp.push_back(cases[i][j].piece);
+        }
+        board.push_back(tmp);
+    }
+    return board;
 }
