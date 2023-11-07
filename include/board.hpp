@@ -44,5 +44,6 @@ class Board : public Entity{
 
         Entity selectedEntity;
         Entity move;
+        list<pieces::Move> moves;
 
 };

@@ -12,7 +12,7 @@
 using namespace std;
 
 Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT)
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) 
 {       
 
     for(int i = 0; i < 8; i++)
@@ -76,39 +76,72 @@ list<pieces::Piece*> Board::getAllPieces() {
 
 
 void Board::update(EventManager &eventmanager) {
-    if (selectedCase == nullptr){
-        if (eventmanager.isLeftClick()){
-            pair<int,int> mousePos = eventmanager.getMousePosition();
-            cout << "Mouse : " << mousePos.first << " " << mousePos.second << endl;
-            pair<int,int> casePos = clickON(mousePos);
-            cout << "Case : " << casePos.first << " " << casePos.second << endl;
-            if (casePos.first != -1 && casePos.second != -1)
+    // interaction with the board
+    if (eventmanager.isLeftClick()){
+        // get mouse position
+        pair<int,int> mousePos = eventmanager.getMousePosition();
+        cout << "Mouse : " << mousePos.first << " " << mousePos.second << endl;
+        // get case position
+        pair<int,int> casePos = clickON(mousePos);
+        cout << "Case : " << casePos.first << " " << casePos.second << endl;
+        // if not out of the board
+        if (casePos.first != -1 && casePos.second != -1)
+        {
+            // if a piece is selected
+            if (selectedCase != nullptr)
             {
-                if (cases[casePos.first][casePos.second].piece != nullptr)
+                bool isMove = false;
+                // if a move is selected
+                for (auto &moveElem : moves)
                 {
-                    selectedCase = &cases[casePos.first][casePos.second];
-                    selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
+                    if (moveElem.x == casePos.first && moveElem.y == casePos.second)
+                    {
+                        // move the piece
+                        cases[casePos.first][casePos.second].piece = selectedCase->piece;
+                        cases[selectedCase->x][selectedCase->y].piece = nullptr;
+                        selectedCase = nullptr;
+                        // update the board
+                        moves.clear();
+                        isMove = true;
+                    }
                 }
+                if (!isMove) selectedCase = nullptr;
             }
+            else if (cases[casePos.first][casePos.second].piece != nullptr)
+            {
+                selectedCase = &cases[casePos.first][casePos.second];
+                selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
+            }
+
         }
+    }
+
+    //get moves possible
+    if (selectedCase != nullptr){
+        moves =  selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard());
     }
     
 }
 
 void Board::render(RenderWindow &window) {
+    // render the board
     window.render(this);
+
+    // render gui selected
     if (selectedCase != nullptr)
     {
         window.render(&selectedEntity);
     }
     if (selectedCase != nullptr && selectedCase->piece != nullptr)
-    for (auto &moveElem : selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard()))
+    // render gui moves
+    for (auto &moveElem : moves)
     {
         Vector2f pos = Vector2f(moveElem.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, moveElem.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN);
         move.setPosition(pos);
         window.render(move);
     }
 
+    // render pieces
     for (auto &entity : getAllPieces())
     {
         window.render(entity);
