@@ -76,8 +76,20 @@ list<pieces::Piece*> Board::getAllPieces() {
 
 
 void Board::update(EventManager &eventmanager) {
+    // get click one click
+    bool OneClick = false;
+    if (eventmanager.isLeftClick())
+    {
+        Click = true;
+    }else if (!eventmanager.isLeftClick() && Click)
+    {
+        Click = false;
+        OneClick = true;
+    }
+
+
     // interaction with the board
-    if (eventmanager.isLeftClick()){
+    if (OneClick){
         // get mouse position
         pair<int,int> mousePos = eventmanager.getMousePosition();
         cout << "Mouse : " << mousePos.first << " " << mousePos.second << endl;

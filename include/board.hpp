@@ -46,4 +46,6 @@ class Board : public Entity{
         Entity move;
         list<pieces::Move> moves;
 
+        bool Click = false;
+
 };
