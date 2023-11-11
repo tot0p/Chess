@@ -13,5 +13,4 @@ public:
 private:
     RenderWindow &window;
     Board &board;
-    Entity* text;
 };
