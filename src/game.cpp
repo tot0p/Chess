@@ -1,6 +1,10 @@
 #include "game.hpp"
 #include "utils.hpp"
 #include "constants.hpp"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 
 
 // Constructeur
@@ -53,12 +57,23 @@ void Game::run()
 
 
         renderManager.render(); // Rendu
+
+        //debug info
+        // window.drawText(std::to_string(1.0f / frameTime).c_str(), Vector2f(0, 0), font);
+        // window.drawText(std::to_string(1.0f / timeStep).c_str(), Vector2f(0, 20), font);
+        
+        
+
+        //std::cout << "FPS: " << 1.0f / frameTime << std::endl;
+        //std::cout << "TPS: " << 1.0f / timeStep << std::endl;
+    
     }
 }
 
 void Game::cleanUp()
 {
     Mix_CloseAudio(); // Nettoyage des ressources de SDL_mixer
+    TTF_Quit();       // Nettoyage des ressources de SDL_ttf
     window.cleanUp(); // Nettoyage des ressources de la fenêtre de rendu
     IMG_Quit();       // Nettoyage des ressources de SDL_image
     SDL_Quit();       // Nettoyage des ressources de SDL

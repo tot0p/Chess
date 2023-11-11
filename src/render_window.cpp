@@ -35,6 +35,9 @@ SDL_Texture *RenderWindow::loadTexture(const char *file_path)
     return texture;
 }
 
+
+
+
 // Cette fonction sert à nettoyer la mémoire
 void RenderWindow::cleanUp()
 {

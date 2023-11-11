@@ -6,6 +6,7 @@
 #include "entity.hpp"
 
 
+
 class RenderWindow
 {
 public:
@@ -19,6 +20,7 @@ public:
     void render(Entity *p_entity); // Affiche une texture
     void display(); // Affiche le renderer
 
+    SDL_Renderer* getRenderer() { return renderer; } // Renvoie le renderer
 
 private:
     SDL_Window* window{nullptr};  // Initialisation à nullptr
