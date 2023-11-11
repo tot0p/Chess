@@ -20,8 +20,9 @@ Game::Game()
         window.loadTexture(PIECES_FILE),
         window.loadTexture(SELECTED_FILE),
         window.loadTexture(GREEN_FILE)),              // Initialisation de board
-      renderManager(window,board),                    // Initialisation de renderManager
-      updateManager(eventManager,board)                   // Initialisation de updateManager
+      renderManager(window,board,debug),                    // Initialisation de renderManager
+      updateManager(eventManager,board),               // Initialisation de updateManager
+        debug(window)                              // Initialisation de debug
 {
 }
 
@@ -53,10 +54,14 @@ void Game::run()
         {
             updateManager.update(); // Mise à jour de la logique de jeu
             accumulator -= timeStep;
+            debug.updateTPS(1.0f / timeStep);
+            debug.updateFPS(1.0f / frameTime);
         }
 
 
+
         renderManager.render(); // Rendu
+        
 
         //debug info
         // window.drawText(std::to_string(1.0f / frameTime).c_str(), Vector2f(0, 0), font);

@@ -7,6 +7,7 @@
 #include "render_manager.hpp"
 #include "render_window.hpp"
 #include "board.hpp"
+#include "debug.hpp"
 
 class Game
 {
@@ -29,4 +30,5 @@ private:
     UpdateManager updateManager; // Ajout du gestionnaire de mise à jour de la logique de jeu
     RenderManager renderManager; // Ajout du gestionnaire de rendu
     Board board; // Ajout du plateau de jeu
+    Debug debug; // Ajout du gestionnaire de debug
 };

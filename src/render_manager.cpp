@@ -3,12 +3,13 @@
 
 using namespace std;
 
-RenderManager::RenderManager(RenderWindow &window,Board &board) : window(window) , board(board) {
+RenderManager::RenderManager(RenderWindow &window,Board &board,Debug &debug) : window(window) , board(board) , debug(debug) {
 }
 
 void RenderManager::render()
 {
     window.clear();
     board.render(window);
+    debug.render(window);
     window.display();
 }
