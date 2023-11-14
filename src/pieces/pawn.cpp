@@ -14,62 +14,19 @@ namespace pieces
         std::list<Move> moves;
         int x = pos.x;
         int y = pos.y;
-        if (color == PieceColor::WHITE)
-        {
-            if (y == 6)
-            {
-                if (board[x][y - 1] == nullptr)
-                {
-                    moves.push_back(Move(x, y - 1, MoveType::NORMAL));
-                    if (board[x][y - 2] == nullptr)
-                    {
-                        moves.push_back(Move(x, y - 2, MoveType::NORMAL));
-                    }
+        int dy = color == PieceColor::WHITE ? -1 : 1;
+        if (y+dy >= 0 && y+dy < 8) {
+            if (board[x][y+dy] == nullptr) {
+                moves.push_back(Move(x,y+dy,MoveType::NORMAL));
+                if (y == (color == PieceColor::WHITE ? 6 : 1) && board[x][y+2*dy] == nullptr) {
+                    moves.push_back(Move(x,y+2*dy,MoveType::NORMAL));
                 }
             }
-            else
-            {
-                if (board[x][y - 1] == nullptr)
-                {
-                    moves.push_back(Move(x, y - 1, MoveType::NORMAL));
-                }
+            if (x > 0 && board[x-1][y+dy] != nullptr && board[x-1][y+dy]->getColor() != color) {
+                moves.push_back(Move(x-1,y+dy,MoveType::ATTACK));
             }
-            if (x > 0 && board[x - 1][y - 1] != nullptr && board[x - 1][y - 1]->getColor() != color)
-            {
-                moves.push_back(Move(x - 1, y - 1, MoveType::ATTACK));
-            }
-            if (x < 7 && board[x + 1][y - 1] != nullptr && board[x + 1][y - 1]->getColor() != color)
-            {
-                moves.push_back(Move(x + 1, y - 1, MoveType::ATTACK));
-            }
-        }
-        else
-        {
-            if (y == 1)
-            {
-                if (board[x][y + 1] == nullptr)
-                {
-                    moves.push_back(Move(x, y + 1, MoveType::NORMAL));
-                    if (board[x][y + 2] == nullptr)
-                    {
-                        moves.push_back(Move(x, y + 2, MoveType::NORMAL));
-                    }
-                }
-            }
-            else
-            {
-                if (board[x][y + 1] == nullptr)
-                {
-                    moves.push_back(Move(x, y + 1, MoveType::NORMAL));
-                }
-            }
-            if (x > 0 && board[x - 1][y + 1] != nullptr && board[x - 1][y + 1]->getColor() != color)
-            {
-                moves.push_back(Move(x - 1, y + 1,MoveType::ATTACK));
-            }
-            if (x < 7 && board[x + 1][y + 1] != nullptr && board[x + 1][y + 1]->getColor() != color)
-            {
-                moves.push_back(Move(x + 1, y + 1,MoveType::ATTACK));
+            if (x < 7 && board[x+1][y+dy] != nullptr && board[x+1][y+dy]->getColor() != color) {
+                moves.push_back(Move(x+1,y+dy,MoveType::ATTACK));
             }
         }
         return moves;
