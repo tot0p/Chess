@@ -10,6 +10,7 @@ namespace pieces
         public:
             Bishop(PieceColor color, SDL_Texture *tileset) : Piece(3, color, tileset){};
             char getLetter() const  { return PieceLetter::BISHOP; }
+            std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board);
     };
 
 }

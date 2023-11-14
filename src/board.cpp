@@ -137,8 +137,6 @@ void Board::update(EventManager &eventmanager) {
     if (selectedCase != nullptr){
         moves =  selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard());
     }
-
-    cout << "cases : " << cases[4][6].piece << endl;
     
 }
 
