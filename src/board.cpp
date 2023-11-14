@@ -116,6 +116,7 @@ void Board::update(EventManager &eventmanager) {
                         cases[casePos.first][casePos.second].piece = selectedCase->piece;
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
                         selectedCase = nullptr;
+                        TurnOfWhite = !TurnOfWhite;
                         // update the board
                         moves.clear();
                         isMove = true;
@@ -125,10 +126,21 @@ void Board::update(EventManager &eventmanager) {
             }
             else if (cases[casePos.first][casePos.second].piece != nullptr)
             {
-                selectedCase = &cases[casePos.first][casePos.second];
-                moves.clear();
-                // Set position of the red square
-                selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
+                if (TurnOfWhite){
+                    if (cases[casePos.first][casePos.second].piece->getColor() == pieces::PieceColor::WHITE){
+                        selectedCase = &cases[casePos.first][casePos.second];
+                        moves.clear();
+                        // Set position of the red square
+                        selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
+                    }
+                } else {
+                    if (cases[casePos.first][casePos.second].piece->getColor() == pieces::PieceColor::BLACK){
+                        selectedCase = &cases[casePos.first][casePos.second];
+                        moves.clear();
+                        // Set position of the red square
+                        selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
+                    }
+                }
             }
 
         }
