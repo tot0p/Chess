@@ -126,6 +126,7 @@ void Board::update(EventManager &eventmanager) {
             else if (cases[casePos.first][casePos.second].piece != nullptr)
             {
                 selectedCase = &cases[casePos.first][casePos.second];
+                moves.clear();
                 // Set position of the red square
                 selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
             }
@@ -134,7 +135,7 @@ void Board::update(EventManager &eventmanager) {
     }
 
     //get moves possible
-    if (selectedCase != nullptr){
+    if (selectedCase != nullptr && moves.empty()){
         moves =  selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard());
     }
     
