@@ -60,18 +60,7 @@ void Game::run()
 
 
 
-        renderManager.render(); // Rendu
-        
-
-        //debug info
-        // window.drawText(std::to_string(1.0f / frameTime).c_str(), Vector2f(0, 0), font);
-        // window.drawText(std::to_string(1.0f / timeStep).c_str(), Vector2f(0, 20), font);
-        
-        
-
-        //std::cout << "FPS: " << 1.0f / frameTime << std::endl;
-        //std::cout << "TPS: " << 1.0f / timeStep << std::endl;
-    
+        renderManager.render(); // Rendu   
     }
 }
 

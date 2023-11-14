@@ -87,15 +87,19 @@ void Board::update(EventManager &eventmanager) {
         OneClick = true;
     }
 
+    if (TurnOfWhite){
+
+    } else {
+
+    }
+
 
     // interaction with the board
     if (OneClick){
         // get mouse position
         pair<int,int> mousePos = eventmanager.getMousePosition();
-        cout << "Mouse : " << mousePos.first << " " << mousePos.second << endl;
         // get case position
         pair<int,int> casePos = clickON(mousePos);
-        cout << "Case : " << casePos.first << " " << casePos.second << endl;
         // if not out of the board
         if (casePos.first != -1 && casePos.second != -1)
         {
@@ -122,6 +126,7 @@ void Board::update(EventManager &eventmanager) {
             else if (cases[casePos.first][casePos.second].piece != nullptr)
             {
                 selectedCase = &cases[casePos.first][casePos.second];
+                // Set position of the red square
                 selectedEntity.setPosition(Vector2f(casePos.first*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, casePos.second*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN));
             }
 
@@ -132,6 +137,8 @@ void Board::update(EventManager &eventmanager) {
     if (selectedCase != nullptr){
         moves =  selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard());
     }
+
+    cout << "cases : " << cases[4][6].piece << endl;
     
 }
 

@@ -48,4 +48,6 @@ class Board : public Entity{
 
         bool Click = false;
 
+        bool TurnOfWhite = true;
+
 };
