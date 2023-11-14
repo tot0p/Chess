@@ -104,7 +104,6 @@ namespace pieces {
             }
             i++;
         }
-        std::cout << "Queen moves: " << moves.size() << std::endl;
         return moves;
     }
 }

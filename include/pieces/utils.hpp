@@ -36,4 +36,5 @@ namespace pieces
         KING = 'K',
         EMPTY = ' '
     };
+
 }

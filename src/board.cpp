@@ -6,6 +6,7 @@
 #include "pieces/rook.hpp"
 #include "pieces/queen.hpp"
 #include "pieces/king.hpp"
+#include "pieces/check_or_mate.hpp"
 
 #include <iostream>
 
@@ -116,6 +117,13 @@ void Board::update(EventManager &eventmanager) {
                         cases[casePos.first][casePos.second].piece = selectedCase->piece;
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
                         selectedCase = nullptr;
+                        // check if check or checkmate
+                        pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
+                        if (checkOrCheckMate.first)
+                        {
+                            cout << "Check" << endl;
+                        }
+                        cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
                         TurnOfWhite = !TurnOfWhite;
                         // update the board
                         moves.clear();
@@ -150,6 +158,8 @@ void Board::update(EventManager &eventmanager) {
     if (selectedCase != nullptr && moves.empty()){
         moves =  selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard());
     }
+
+    
     
 }
 
@@ -225,4 +235,18 @@ vector<vector<pieces::Piece*>> Board::getBoard() {
         board.push_back(tmp);
     }
     return board;
+}
+
+pair<bool,bool> Board::isCheckOrCheckMate() {
+    bool isCheck = false;
+    bool isCheckMate = false;
+    std::vector<std::vector<pieces::Piece *>> board = getBoard();
+    if (TurnOfWhite){
+        isCheck = pieces::isCheck(board, pieces::PieceColor::WHITE);
+        isCheckMate = pieces::isCheckMate(board, pieces::PieceColor::WHITE);
+    } else {
+        isCheck = pieces::isCheck(board, pieces::PieceColor::BLACK);
+        isCheckMate = pieces::isCheckMate(board, pieces::PieceColor::BLACK);
+    }
+    return make_pair(isCheck, isCheckMate);
 }

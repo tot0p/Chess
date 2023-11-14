@@ -29,7 +29,7 @@ namespace pieces{
         public:
 
             Piece(int piece, PieceColor color, SDL_Texture *tileset);
-            char getLetter() const { return PieceLetter::EMPTY; }
+            virtual char getLetter() const { return PieceLetter::EMPTY; }
             PieceColor getColor() const { return color; }
 
 

@@ -38,6 +38,7 @@ class Board : public Entity{
         list<pieces::Piece*> getAllPieces();
 
         pieces::BoardLetter getBoardLetter();
+        pair<bool,bool> isCheckOrCheckMate();
 
         Case cases[8][8] ;
         Case* selectedCase = nullptr;

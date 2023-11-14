@@ -56,7 +56,6 @@ namespace pieces {
             }
             i++;
         }
-        std::cout << "Rook moves: " << moves.size() << std::endl;
         return moves;
     }
 }

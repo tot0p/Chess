@@ -72,7 +72,6 @@ namespace pieces
                 moves.push_back(Move(x + 1, y + 1,MoveType::ATTACK));
             }
         }
-        std::cout << "Pawn moves: " << moves.size() << std::endl;
         return moves;
     }
 }

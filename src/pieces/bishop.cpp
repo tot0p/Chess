@@ -32,7 +32,7 @@ namespace pieces
                 break;
             }
             i++;
-            
+
         }
         i = 1;
         while (x+i < 8 && y-i >= 0) {
@@ -58,7 +58,6 @@ namespace pieces
             }
             i++;
         }
-        std::cout << "Bishop moves: " << moves.size() << std::endl;
         return moves;
     }
 } 

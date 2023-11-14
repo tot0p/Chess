@@ -47,7 +47,6 @@ namespace pieces {
                 moves.push_back(Move(x,y+1,board[x][y+1] == nullptr ? MoveType::NORMAL : MoveType::ATTACK));
             }
         }
-        std::cout << "King moves: " << moves.size() << std::endl;
         return moves;
     }
 }
