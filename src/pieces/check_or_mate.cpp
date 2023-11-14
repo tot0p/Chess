@@ -21,6 +21,21 @@ namespace pieces {
         return false;
     }
     bool isCheckMate(std::vector<std::vector<Piece *>> board,PieceColor color){
-        return false;
+        for (int i = 0; i < board.size(); i++){
+            for (int j = 0; j < board[i].size(); j++){
+                if (board[i][j] != nullptr && board[i][j]->getColor() != color){
+                    std::list<Move> moves = board[i][j]->getMoves(Vector2f(i, j), board);
+                    for (Move move : moves){
+                        std::vector<std::vector<Piece *>> newBoard = board;
+                        newBoard[move.x][move.y] = newBoard[i][j];
+                        newBoard[i][j] = nullptr;
+                        if (!isCheck(newBoard,color)){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
