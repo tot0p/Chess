@@ -36,5 +36,7 @@ constexpr int PIECES_HEIGHT = 16;
 
 constexpr char *GREEN_FILE = "assets/green.png";
 
+constexpr char *RED_FILE = "assets/red.png";
+
 
 constexpr char *FONT_FILE = "assets/fonts/Roboto-Black.ttf";

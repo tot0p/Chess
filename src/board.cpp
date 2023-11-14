@@ -12,8 +12,8 @@
 
 using namespace std;
 
-Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) 
+Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE) 
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT)
 {       
 
     for(int i = 0; i < 8; i++)
@@ -86,12 +86,6 @@ void Board::update(EventManager &eventmanager) {
     {
         Click = false;
         OneClick = true;
-    }
-
-    if (TurnOfWhite){
-
-    } else {
-
     }
 
 
@@ -177,8 +171,16 @@ void Board::render(RenderWindow &window) {
     for (auto &moveElem : moves)
     {
         Vector2f pos = Vector2f(moveElem.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN, moveElem.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN);
-        move.setPosition(pos);
-        window.render(move);
+        if (moveElem.type == pieces::MoveType::ATTACK)
+        {
+            attack.setPosition(pos);
+            window.render(attack);
+        }
+        else
+        {
+            move.setPosition(pos);
+            window.render(move);
+        }
     }
 
     // render pieces

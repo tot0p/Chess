@@ -25,7 +25,7 @@ struct Case{
 
 class Board : public Entity{
     public:
-        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight, SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE);
+        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight, SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE,SDL_Texture* ATTACK_FILE);
 
 
         void update(EventManager &eventManager);
@@ -45,6 +45,7 @@ class Board : public Entity{
 
         Entity selectedEntity;
         Entity move;
+        Entity attack;
         list<pieces::Move> moves;
 
         bool Click = false;
