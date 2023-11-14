@@ -150,11 +150,10 @@ void Board::update(EventManager &eventmanager) {
 
     //get moves possible
     if (selectedCase != nullptr && moves.empty()){
-        moves =  selectedCase->piece->getMoves(Vector2f(selectedCase->x, selectedCase->y), getBoard());
+        Vector2f pos = Vector2f(selectedCase->x, selectedCase->y);
+        moves = pieces::supprUnauthorizedMoves(pos,selectedCase->piece->getMoves(pos,getBoard()),getBoard(),selectedCase->piece->getColor());
     }
 
-    
-    
 }
 
 void Board::render(RenderWindow &window) {
