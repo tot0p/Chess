@@ -14,6 +14,7 @@ class GameScene : public Scene
         Vector2f(WINDOW_WIDTH / (2 * SCALE_FACTOR) - BOARD_WIDTH / 2, WINDOW_HEIGHT / (2 * SCALE_FACTOR) - BOARD_HEIGHT / 2),
         window.loadTexture(BOARD_FILE),
         BOARD_WIDTH,BOARD_HEIGHT,
+        window,
         window.loadTexture(PIECES_FILE),
         window.loadTexture(SELECTED_FILE),
         window.loadTexture(GREEN_FILE),
