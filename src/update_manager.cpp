@@ -3,11 +3,14 @@
 #include "entity.hpp"
 
 
-UpdateManager::UpdateManager(EventManager &eventManager, Board &board) : eventManager(eventManager) , board(board){}
+UpdateManager::UpdateManager(EventManager &eventManager,std::list<Scene*>& scenes) : eventManager(eventManager) , scenes(scenes) {}
 
 
-void UpdateManager::update()
+void UpdateManager::update(int scene)
 {
-    board.update(eventManager);
+    std::list<Scene*>::iterator it = scenes.begin();
+    std::advance(it,scene);
+    (*it)->update(eventManager);
+    // board.update(eventManager);
 }
 

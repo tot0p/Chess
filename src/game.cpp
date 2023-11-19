@@ -5,7 +5,10 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
+#include "game_scene.hpp"
+#include "main_menu.hpp"
 
+#include "scene_creator.hpp"
 
 // Constructeur
 Game::Game()
@@ -21,9 +24,10 @@ Game::Game()
         window.loadTexture(SELECTED_FILE),
         window.loadTexture(GREEN_FILE),
         window.loadTexture(RED_FILE)),              // Initialisation de board
-      renderManager(window,board,debug),                    // Initialisation de renderManager
-      updateManager(eventManager,board),               // Initialisation de updateManager
-        debug(window)                              // Initialisation de debug
+      renderManager(window,scenes,debug),                    // Initialisation de renderManager
+      updateManager(eventManager,scenes),               // Initialisation de updateManager
+        debug(window),                              // Initialisation de debug
+        scenes({SceneCreator::createScene(SceneId::MAIN_MENU,window,board),SceneCreator::createScene(SceneId::GAME_SCENE,window,board)}) // Initialisation de la liste des scènes
 {
 }
 
@@ -39,6 +43,7 @@ Game::~Game()
 
 void Game::run()
 {
+    int currentScene = 0;
     while (eventManager.isGameRunning())
     {
         // Calcul des frames de logique de jeu par rapport aux frames de rendu
@@ -53,15 +58,16 @@ void Game::run()
 
         while (accumulator >= timeStep)
         {
-            updateManager.update(); // Mise à jour de la logique de jeu
+            updateManager.update(currentScene); // Mise à jour de la logique de jeu
             accumulator -= timeStep;
             debug.updateTPS(1.0f / timeStep);
             debug.updateFPS(1.0f / frameTime);
+            currentScene = eventManager.getScene();
         }
 
 
 
-        renderManager.render(); // Rendu   
+        renderManager.render(currentScene); // Rendu   
     }
 }
 

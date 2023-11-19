@@ -1,15 +1,17 @@
 #include "render_manager.hpp"
-#include "font.hpp"
 
-using namespace std;
 
-RenderManager::RenderManager(RenderWindow &window,Board &board,Debug &debug) : window(window) , board(board) , debug(debug) {
+RenderManager::RenderManager(RenderWindow &window,std::list<Scene*>& scenes,Debug &debug) : window(window)  , scenes(scenes), debug(debug) {
 }
 
-void RenderManager::render()
+void RenderManager::render(int scene)
 {
     window.clear();
-    board.render(window);
+    // board.render(window);
+    //render scenes at index scene
+    std::list<Scene*>::iterator it = scenes.begin();
+    std::advance(it,scene);
+    (*it)->render(window);
     debug.render(window);
     window.display();
 }

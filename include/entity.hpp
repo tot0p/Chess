@@ -19,6 +19,9 @@ class Entity {
         void setTexture(SDL_Texture* p_texture) { texture = p_texture; }
         void setSpriteSheetCoord(int x, int y) { currentFrame.x = x; currentFrame.y = y; }
 
+        int getWidth() { return currentFrame.w; }
+        int getHeight() { return currentFrame.h; }
+
         void move(float dx, float dy);
 
     private:

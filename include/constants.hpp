@@ -40,3 +40,14 @@ constexpr char *RED_FILE = "assets/red.png";
 
 
 constexpr char *FONT_FILE = "assets/fonts/Roboto-Black.ttf";
+
+
+constexpr char *PLAY_FILE = "assets/play.png";
+constexpr int PLAY_WIDTH = 64;
+constexpr int PLAY_HEIGHT = 16;
+
+constexpr char *QUIT_FILE = "assets/quit.png";
+constexpr int QUIT_WIDTH = 64;
+constexpr int QUIT_HEIGHT = 16;
+
+

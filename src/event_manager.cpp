@@ -17,14 +17,10 @@ void EventManager::processEvents()
             gameRunning = false;
             break;
         case SDL_KEYDOWN:
-            switch (event.key.keysym.sym)
-            {
-            }
+            keysPressed.push_back(event.key.keysym.sym);
             break;
         case SDL_KEYUP:
-            switch (event.key.keysym.sym)
-            {
-            }
+            keysPressed.remove(event.key.keysym.sym);
             break;
         case SDL_MOUSEBUTTONDOWN:
             switch (event.button.button)

@@ -8,6 +8,9 @@
 #include "render_window.hpp"
 #include "board.hpp"
 #include "debug.hpp"
+#include "scene.hpp"
+
+#include <list>
 
 class Game
 {
@@ -31,4 +34,5 @@ private:
     RenderManager renderManager; // Ajout du gestionnaire de rendu
     Board board; // Ajout du plateau de jeu
     Debug debug; // Ajout du gestionnaire de debug
+    std::list<Scene*> scenes; // Ajout de la liste des scènes
 };
