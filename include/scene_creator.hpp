@@ -15,14 +15,14 @@ enum SceneId
 class SceneCreator
 {
     public:
-        static Scene* createScene(SceneId sceneId, RenderWindow &window, Board &board)
+        static Scene* createScene(SceneId sceneId, RenderWindow &window)
         {
             switch (sceneId)
             {
                 case MAIN_MENU:
                     return new MainMenu(window);
                 case GAME_SCENE:
-                    return new GameScene(board);
+                    return new GameScene(window);
                 default:
                     return nullptr;
             }

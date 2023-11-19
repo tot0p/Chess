@@ -52,4 +52,10 @@ class Board : public Entity{
 
         bool TurnOfWhite = true;
 
+
+
+        // GUI 
+
+        Entity* TurnOfWhiteText;
+        Entity* TurnOfBlackText;
 };

@@ -15,19 +15,11 @@ Game::Game()
     : currentTime(utils::hireTimeInSeconds()),           // Initialise currentTime avec le temps actuel
       timeStep(TIME_STEP),                               // Initialisation de timeStep
       window(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT), // Initialisation de window
-      eventManager(),                                    // Initialisation de eventManager
-      board(
-        Vector2f(WINDOW_WIDTH / (2 * SCALE_FACTOR) - BOARD_WIDTH / 2, WINDOW_HEIGHT / (2 * SCALE_FACTOR) - BOARD_HEIGHT / 2),
-        window.loadTexture(BOARD_FILE),
-        BOARD_WIDTH,BOARD_HEIGHT,
-        window.loadTexture(PIECES_FILE),
-        window.loadTexture(SELECTED_FILE),
-        window.loadTexture(GREEN_FILE),
-        window.loadTexture(RED_FILE)),              // Initialisation de board
+      eventManager(),                                    // Initialisation de eventManager              // Initialisation de board
       renderManager(window,scenes,debug),                    // Initialisation de renderManager
       updateManager(eventManager,scenes),               // Initialisation de updateManager
         debug(window),                              // Initialisation de debug
-        scenes({SceneCreator::createScene(SceneId::MAIN_MENU,window,board),SceneCreator::createScene(SceneId::GAME_SCENE,window,board)}) // Initialisation de la liste des scènes
+        scenes({SceneCreator::createScene(SceneId::MAIN_MENU,window),SceneCreator::createScene(SceneId::GAME_SCENE,window)}) // Initialisation de la liste des scènes
 {
 }
 

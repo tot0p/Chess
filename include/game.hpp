@@ -32,7 +32,6 @@ private:
     EventManager eventManager; // Ajout du gestionnaire d'événements
     UpdateManager updateManager; // Ajout du gestionnaire de mise à jour de la logique de jeu
     RenderManager renderManager; // Ajout du gestionnaire de rendu
-    Board board; // Ajout du plateau de jeu
     Debug debug; // Ajout du gestionnaire de debug
     std::list<Scene*> scenes; // Ajout de la liste des scènes
 };

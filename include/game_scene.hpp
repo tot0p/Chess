@@ -2,13 +2,23 @@
 
 #include "scene.hpp"
 #include "board.hpp"
-
+#include "render_window.hpp"
+#include "event_manager.hpp"
+#include "constants.hpp"
+#include "math.hpp"
 
 class GameScene : public Scene
 {
     public:
-        GameScene(Board &board) : board(board) {
-            
+        GameScene(RenderWindow &window) : board(
+        Vector2f(WINDOW_WIDTH / (2 * SCALE_FACTOR) - BOARD_WIDTH / 2, WINDOW_HEIGHT / (2 * SCALE_FACTOR) - BOARD_HEIGHT / 2),
+        window.loadTexture(BOARD_FILE),
+        BOARD_WIDTH,BOARD_HEIGHT,
+        window.loadTexture(PIECES_FILE),
+        window.loadTexture(SELECTED_FILE),
+        window.loadTexture(GREEN_FILE),
+        window.loadTexture(RED_FILE)
+        ) {
         }
         void update(EventManager &eventManager) override {
             board.update(eventManager);
@@ -17,5 +27,5 @@ class GameScene : public Scene
             board.render(window);
         }
     private:
-        Board& board;
+        Board board;
 };

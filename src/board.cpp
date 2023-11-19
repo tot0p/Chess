@@ -13,7 +13,7 @@
 using namespace std;
 
 Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT)
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr)
 {       
 
     for(int i = 0; i < 8; i++)
