@@ -128,6 +128,20 @@ void Board::update(EventManager &eventmanager) {
                             cout << "Check" << endl;
                         }
                         cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
+                        if (checkOrCheckMate.second)
+                        {
+                            cout << "CheckMate" << endl;
+                            if (TurnOfWhite)
+                            {
+                                // Win page for white
+                                eventmanager.changeScene(2);
+                            }
+                            else
+                            {   
+                                // Win page for black
+                                eventmanager.changeScene(3);
+                            }
+                        }
                         TurnOfWhite = !TurnOfWhite;
                         // update the board
                         moves.clear();

@@ -5,11 +5,14 @@
 #include "game_scene.hpp"
 #include "main_menu.hpp"
 #include "board.hpp"
+#include "win_lose_menu.hpp"
 
 enum SceneId
 {
     MAIN_MENU,
-    GAME_SCENE
+    GAME_SCENE,
+    WIN_WHITE,
+    WIN_BLACK,
 };
 
 class SceneCreator
@@ -23,6 +26,10 @@ class SceneCreator
                     return new MainMenu(window);
                 case GAME_SCENE:
                     return new GameScene(window);
+                case WIN_WHITE:
+                    return new WinLoseMenu(window,true);
+                case WIN_BLACK:
+                    return new WinLoseMenu(window,false);
                 default:
                     return nullptr;
             }

@@ -19,7 +19,7 @@ Game::Game()
       renderManager(window,scenes,debug),                    // Initialisation de renderManager
       updateManager(eventManager,scenes),               // Initialisation de updateManager
         debug(window),                              // Initialisation de debug
-        scenes({SceneCreator::createScene(SceneId::MAIN_MENU,window),SceneCreator::createScene(SceneId::GAME_SCENE,window)}) // Initialisation de la liste des scènes
+        scenes({SceneCreator::createScene(SceneId::MAIN_MENU,window),SceneCreator::createScene(SceneId::GAME_SCENE,window),SceneCreator::createScene(SceneId::WIN_WHITE,window),SceneCreator::createScene(SceneId::WIN_BLACK,window)}) // Initialisation de la liste des scènes
 {
 }
 
