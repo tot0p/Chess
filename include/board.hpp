@@ -30,6 +30,7 @@ class Board : public Entity{
 
         void update(EventManager &eventManager);
         void render(RenderWindow &window);
+        void reset();
 
         vector<vector<pieces::Piece*>> getBoard();
 
@@ -39,6 +40,8 @@ class Board : public Entity{
 
         pieces::BoardLetter getBoardLetter();
         pair<bool,bool> isCheckOrCheckMate();
+
+        void DefaultBoard();
 
         Case cases[8][8] ;
         Case* selectedCase = nullptr;
@@ -55,7 +58,7 @@ class Board : public Entity{
 
 
         // GUI 
-
+        SDL_Texture* p_tileset;
         Entity* TurnOfWhiteText;
         Entity* TurnOfBlackText;
 };

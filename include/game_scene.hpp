@@ -27,6 +27,9 @@ class GameScene : public Scene
         void render(RenderWindow &window) override {
             board.render(window);
         }
+        void reset() override {
+            board.reset();
+        }
     private:
         Board board;
 };

@@ -54,7 +54,15 @@ void Game::run()
             accumulator -= timeStep;
             debug.updateTPS(1.0f / timeStep);
             debug.updateFPS(1.0f / frameTime);
-            currentScene = eventManager.getScene();
+            int tempsScene = eventManager.getScene();
+            if (tempsScene != currentScene)
+            {
+                currentScene = tempsScene;
+                // get scene 
+                std::list<Scene*>::iterator it = scenes.begin();
+                std::advance(it, currentScene);
+                (*it)->reset();            
+            }
         }
 
 

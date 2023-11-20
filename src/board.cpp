@@ -13,9 +13,22 @@
 using namespace std;
 
 Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr)
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset)
 {       
 
+    
+    DefaultBoard();
+
+    // GUI
+    Font font(FONT_FILE,16,{255,255,255,255});
+    Vector2f posTurn = {WINDOW_WIDTH/(2 * SCALE_FACTOR) - getWidth()/3,WINDOW_HEIGHT/(2 * SCALE_FACTOR) - getHeight()/2 - 20 };
+    TurnOfWhiteText = font.createTextEntity("Turn of white",window,posTurn);
+    TurnOfBlackText = font.createTextEntity("Turn of black",window,posTurn);
+    
+
+}
+
+void Board::DefaultBoard() {
     for(int i = 0; i < 8; i++)
     {
         for(int j = 0; j < 8; j++) 
@@ -56,16 +69,6 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
             cases[i][j].piece = nullptr;
         }
     }
-
-
-
-    // GUI
-    Font font(FONT_FILE,16,{255,255,255,255});
-    Vector2f posTurn = {WINDOW_WIDTH/(2 * SCALE_FACTOR) - getWidth()/3,WINDOW_HEIGHT/(2 * SCALE_FACTOR) - getHeight()/2 - 20 };
-    TurnOfWhiteText = font.createTextEntity("Turn of white",window,posTurn);
-    TurnOfBlackText = font.createTextEntity("Turn of black",window,posTurn);
-    
-
 }
 
 list<pieces::Piece*> Board::getAllPieces() {
@@ -285,3 +288,13 @@ pair<bool,bool> Board::isCheckOrCheckMate() {
     }
     return make_pair(isCheck, isCheckMate);
 }
+
+void Board::reset() {
+    Click = false;
+    TurnOfWhite = true;
+    selectedCase = nullptr;
+    moves.clear();
+    // TODO reset board
+    
+    DefaultBoard();
+};
