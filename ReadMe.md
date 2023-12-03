@@ -163,4 +163,50 @@ classDiagram
         +virtual std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
+    Piece <|-- King
+    Piece <|-- Queen
+    Piece <|-- Rook
+    Piece <|-- Bishop
+    Piece <|-- Knight
+    Piece <|-- Pawn
+
+
+    class Pawn {
+        +Pawn(PieceColor color,SDL_Texture* texture)
+        +char getLetter()
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+    class Knight {
+        +Knight(PieceColor color,SDL_Texture* texture)
+        +char getLetter()
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+    class Bishop {
+        +Bishop(PieceColor color,SDL_Texture* texture)
+        +char getLetter()
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+    class Rook {
+        +Rook(PieceColor color,SDL_Texture* texture)
+        +char getLetter()
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+    class Queen {
+        +Queen(PieceColor color,SDL_Texture* texture)
+        +char getLetter()
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+    class King {
+        +King(PieceColor color,SDL_Texture* texture)
+        +char getLetter()
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+    
+
 ```	
