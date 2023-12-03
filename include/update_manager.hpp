@@ -17,5 +17,4 @@ public:
 private:
     EventManager &eventManager;
     std::list<Scene*>& scenes;
-    // Board &board;
 };
