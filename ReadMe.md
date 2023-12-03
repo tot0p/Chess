@@ -107,6 +107,32 @@ classDiagram
         +render(RenderWindow& window)
     }
 
+    class Vector2f {
+        -float x
+        -float y
+
+        +Vector2f()
+        +Vector2f(float x, float y)
+    }
+
+    class Font {
+        -TTF_Font* font
+        -SDL_Color color
+
+        +Font(const char* path, int size, SDL_Color color)
+        +~Font()
+        +TTF_Font* getFont()
+        +SDL_Color getColor()
+        +Entity* createTextEntity(const char* text, RenderWindow& window, Vector2f pos)
+    }
+
+```
+
+```mermaid
+classDiagram 
+
+    Entity <|-- Piece
+
     class Entity {
         -Vector2f position
         -SDL_Texture* texture
@@ -128,4 +154,13 @@ classDiagram
         +move(float dx, float dy)
     }
 
-```
+    class Piece {
+        #PieceColor color
+
+        +Piece(int piece, PieceColor color,SDL_Texture* texture)
+        +virtual char getLetter()
+        +PieceColor getColor()
+        +virtual std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
+    }
+
+```	
