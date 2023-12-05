@@ -32,7 +32,7 @@ classDiagram
         -UpdateManager updateManager
         -RenderManager renderManager
         -Debug debug
-        -std::list~Scene*~ scenes
+        -std::list<Scene*> scenes
 
         +Game()
         +~Game()
@@ -67,14 +67,14 @@ classDiagram
         -int scene
         -bool rightClick
         -bool leftClick
-        -std::list~SDL_Keycode~ keysPressed
+        -std::list<SDL_Keycode> keysPressed
 
         +EventManager()
         +~EventManager()
         +processEvents()
         +bool isRightClick()
         +bool isLeftClick()
-        +std::pair~int, int~ getMousePosition()
+        +std::pair<int, int> getMousePosition()
         +bool isGameRunning()
         +changeScene(int scene)
         +int getScene()
@@ -86,9 +86,9 @@ classDiagram
     class UpdateManager{
 
         -EventManager& eventManager
-        -std::list~Scene*~& scenes
+        -std::list<Scene*>& scenes
 
-        +UpdateManager(EventManager& eventManager, std::list~Scene*~& scenes)
+        +UpdateManager(EventManager& eventManager, std::list<Scene*>& scenes)
         +update(int scene)
 
     }
@@ -132,6 +132,7 @@ classDiagram
 classDiagram 
 
     Entity <|-- Board
+
     Entity <|-- Piece
 
     class Entity {
@@ -163,7 +164,7 @@ classDiagram
         -Entity selectedEntity
         -Entity move
         -Entity attack
-        -list~Move~ moves
+        -list<Move> moves
         -bool Click
         -bool TurnOfWhite
         -SDL_Texture *p_tileset
@@ -174,12 +175,12 @@ classDiagram
         +update(EventManager& eventManager)
         +render(RenderWindow& window)
         +reset()
-        +std::vector~std::vector~Piece*~ getBoard()
+        +std::vector<std::vector<Piece*>> getBoard()
         
-        -pair~int,int~ clickOn(pair~int,int~ mousePos)
-        -list~pieces::Piece*~ getAllPieces()
+        -pair<int,int> clickOn(pair<int,int> mousePos)
+        -list<pieces::Piece*> getAllPieces()
         -BoardLetter getBoardLetter()
-        -pair~bool,bool~ isCheckorCheckMate()
+        -pair<bool,bool> isCheckorCheckMate()
         -DefaultBoard()
 
     }
@@ -190,7 +191,7 @@ classDiagram
         +Piece(int piece, PieceColor color,SDL_Texture* texture)
         +virtual char getLetter()
         +PieceColor getColor()
-        +virtual std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +virtual std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     Piece <|-- King
@@ -204,37 +205,37 @@ classDiagram
     class Pawn {
         +Pawn(PieceColor color,SDL_Texture* texture)
         +char getLetter()
-        +std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     class Knight {
         +Knight(PieceColor color,SDL_Texture* texture)
         +char getLetter()
-        +std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     class Bishop {
         +Bishop(PieceColor color,SDL_Texture* texture)
         +char getLetter()
-        +std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     class Rook {
         +Rook(PieceColor color,SDL_Texture* texture)
         +char getLetter()
-        +std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     class Queen {
         +Queen(PieceColor color,SDL_Texture* texture)
         +char getLetter()
-        +std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     class King {
         +King(PieceColor color,SDL_Texture* texture)
         +char getLetter()
-        +std::list~Move~ getMoves(Vector2f pos,std::vector~std::vector~Piece*~ board)
+        +std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board)
     }
 
     
