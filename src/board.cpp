@@ -121,19 +121,16 @@ void Board::update(EventManager &eventmanager) {
                     if (moveElem.x == casePos.first && moveElem.y == casePos.second)
                     {
                         // move the piece
+                        selectedCase->piece->UpdateMoved();
                         cases[casePos.first][casePos.second].piece = selectedCase->piece;
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
                         selectedCase = nullptr;
+                        
                         // check if check or checkmate
                         pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
-                        if (checkOrCheckMate.first)
-                        {
-                            cout << "Check" << endl;
-                        }
                         cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
                         if (checkOrCheckMate.second)
                         {
-                            cout << "CheckMate" << endl;
                             if (TurnOfWhite)
                             {
                                 // Win page for white

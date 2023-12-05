@@ -20,7 +20,12 @@ namespace pieces{
     };
 
 
-    
+    enum HasMoved
+    {
+        FALSE,
+        FIRST,
+        TRUE
+    };
 
 
 
@@ -32,6 +37,7 @@ namespace pieces{
             virtual char getLetter() const { return PieceLetter::EMPTY; }
             PieceColor getColor() const { return color; }
 
+            void UpdateMoved() { hasMoved = HasMoved::FALSE ? HasMoved::FIRST : HasMoved::TRUE; }
 
             virtual std::list<Move> getMoves(Vector2f pos,std::vector<std::vector<Piece*>> board) { std::cout << "not implement yet" << std::endl; return std::list<Move>();};
 
@@ -40,6 +46,8 @@ namespace pieces{
 
         protected:
             PieceColor color;
+            HasMoved hasMoved = HasMoved::FALSE;
+
 
     };
 }
