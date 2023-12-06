@@ -9,6 +9,7 @@ namespace pieces
     };
     
     enum MoveType {
+        NONE,
         NORMAL,
         ATTACK,
         CASTLING,
@@ -22,6 +23,7 @@ namespace pieces
         int y;
         MoveType type;
         Move(int x, int y, MoveType type) : x(x), y(y), type(type){};
+        Move() : x(0), y(0), type(MoveType::NONE){};
     };
     
 

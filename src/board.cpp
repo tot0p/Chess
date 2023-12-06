@@ -13,7 +13,7 @@
 using namespace std;
 
 Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset)
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset) , lastMove()
 {       
 
     
@@ -120,7 +120,9 @@ void Board::update(EventManager &eventmanager) {
                 {
                     if (moveElem.x == casePos.first && moveElem.y == casePos.second)
                     {
+                        cout << "move is :" << moveElem.x << " " << moveElem.y << " move type : " << moveElem.type << endl;
                         // move the piece
+                        lastMove = moveElem;
                         selectedCase->piece->UpdateMoved();
                         cases[casePos.first][casePos.second].piece = selectedCase->piece;
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
@@ -175,7 +177,7 @@ void Board::update(EventManager &eventmanager) {
     //get moves possible
     if (selectedCase != nullptr && moves.empty()){
         Vector2f pos = Vector2f(selectedCase->x, selectedCase->y);
-        moves = pieces::supprUnauthorizedMoves(pos,selectedCase->piece->getMoves(pos,getBoard()),getBoard(),selectedCase->piece->getColor());
+        moves = pieces::supprUnauthorizedMoves(pos,pieces::addSpecialMoves(pos,selectedCase->piece->getMoves(pos,getBoard()),getBoard(),selectedCase->piece->getColor(),lastMove),getBoard(),selectedCase->piece->getColor());
     }
 
 }
@@ -227,7 +229,6 @@ pair<int,int> Board::clickON(pair<int,int> mousePos){
     Vector2f pos = getPosition();
     int x = mousePos.first - pos.x *SCALE_FACTOR - BOARD_MARGIN *SCALE_FACTOR;
     int y = mousePos.second - pos.y *SCALE_FACTOR - BOARD_MARGIN *SCALE_FACTOR;
-    cout << "x : " << x << " y : " << y << endl;
     if (x < 0 || y < 0 || x > 8*PIECES_WIDTH*SCALE_FACTOR|| y > 8*PIECES_HEIGHT*SCALE_FACTOR)
     {
         return make_pair(-1,-1);

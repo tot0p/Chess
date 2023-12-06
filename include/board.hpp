@@ -50,6 +50,7 @@ class Board : public Entity{
         Entity move;
         Entity attack;
         list<pieces::Move> moves;
+        pieces::Move lastMove;
 
         bool Click = false;
 
