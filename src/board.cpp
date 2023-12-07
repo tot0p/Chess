@@ -126,7 +126,13 @@ void Board::update(EventManager &eventmanager) {
                         selectedCase->piece->UpdateMoved();
                         cases[casePos.first][casePos.second].piece = selectedCase->piece;
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
+
+                        if (moveElem.type == pieces::MoveType::PASSANT) {
+                            cout << "passant" << endl;
+                            cases[casePos.first][selectedCase->y].piece = nullptr;
+                        }
                         selectedCase = nullptr;
+
                         
                         // check if check or checkmate
                         pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
