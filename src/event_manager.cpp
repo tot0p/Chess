@@ -17,10 +17,14 @@ void EventManager::processEvents()
             gameRunning = false;
             break;
         case SDL_KEYDOWN:
-            keysPressed.push_back(event.key.keysym.sym);
+            // if key is not already pressed
+            if (std::find(keysPressed.begin(), keysPressed.end(), event.key.keysym.scancode) == keysPressed.end())
+                keysPressed.push_back(event.key.keysym.scancode);
             break;
         case SDL_KEYUP:
-            keysPressed.remove(event.key.keysym.sym);
+            //if key is in the list
+            if (std::find(keysPressed.begin(), keysPressed.end(), event.key.keysym.scancode) != keysPressed.end())
+                keysPressed.remove(event.key.keysym.scancode);
             break;
         case SDL_MOUSEBUTTONDOWN:
             switch (event.button.button)
@@ -46,4 +50,8 @@ void EventManager::processEvents()
             break;
         }
     }
+}
+
+bool EventManager::isKeyPressed(SDL_Keycode key) {
+    return std::find(keysPressed.begin(), keysPressed.end(), key) != keysPressed.end();
 }

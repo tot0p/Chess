@@ -12,9 +12,21 @@ Debug::Debug(RenderWindow &window) : font(FONT_FILE,16,{255,255,255,255}) , TPS_
 
 void Debug::render(RenderWindow &window)
 {
+    if (!show){
+        return;
+    }
     TPS = font.createTextEntity(("TPS: " + to_string(TPS_int)).c_str(),window,{0,0});
     FPS = font.createTextEntity(("FPS: " + to_string(FPS_int)).c_str(),window,{0,16});
-
     window.render(TPS);
     window.render(FPS);
+}
+
+void Debug::update(EventManager &eventManager)
+{
+    if (eventManager.isKeyPressed(SDL_SCANCODE_F3)){
+        f3Pressed = true;
+    }else if (f3Pressed && !eventManager.isKeyPressed(SDL_SCANCODE_F3)){
+        show = !show;
+        f3Pressed = false;
+    }
 }

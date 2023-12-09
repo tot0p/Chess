@@ -54,6 +54,7 @@ void Game::run()
             accumulator -= timeStep;
             debug.updateTPS(1.0f / timeStep);
             debug.updateFPS(1.0f / frameTime);
+            debug.update(eventManager);
             int tempsScene = eventManager.getScene();
             if (tempsScene != currentScene)
             {

@@ -4,6 +4,7 @@
 #include <utility>
 #include <list>
 #include <algorithm>
+#include <iostream>
 class EventManager
 {
 public:
@@ -20,7 +21,7 @@ public:
     void changeScene(int scene) { this->scene = scene; }
     int getScene() const { return scene; }
 
-    bool isKeyPressed(SDL_Keycode key) const { return std::find(keysPressed.begin(), keysPressed.end(), key) != keysPressed.end(); }
+    bool isKeyPressed(SDL_Keycode key) ;
 
     void quit() { gameRunning = false; }
 
