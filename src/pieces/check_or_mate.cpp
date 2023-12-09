@@ -66,25 +66,10 @@ namespace pieces {
             cout << "pawn detected" << endl;
             // check if are a pawn of the other color on the left or on the right
             if (posPiece.x -1 >= 0 && lastMove.x == posPiece.x - 1 && lastMove.y == posPiece.y){
-                cout << "left" << endl;
                 moves.push_back(Move(posPiece.x - 1, color == PieceColor::WHITE ? posPiece.y-1 : posPiece.y+1, MoveType::PASSANT));
             }else if (posPiece.x + 1 < board.size() && lastMove.x == posPiece.x + 1 && lastMove.y == posPiece.y){
-                cout << "right" << endl;
                 moves.push_back(Move(posPiece.x + 1, color == PieceColor::WHITE ? posPiece.y-1 : posPiece.y+1, MoveType::PASSANT));
             }
-
-            // if (posPiece.x - 1 >= 0 && board[posPiece.x - 1][posPiece.y] != nullptr && board[posPiece.x - 1][posPiece.y]->getLetter() == PieceLetter::PAWN && board[posPiece.x - 1][posPiece.y]->getColor() != color){
-            //     // check if the pawn of the other color has just done a special move
-            //     if (board[posPiece.x - 1][posPiece.y]->getHasMoved() == HasMoved::FIRST){
-            //         moves.push_back(Move(posPiece.x - 1, posPiece.y, MoveType::PASSANT));
-            //     }
-            // }
-            // if (posPiece.x + 1 < board.size() && board[posPiece.x + 1][posPiece.y] != nullptr && board[posPiece.x + 1][posPiece.y]->getLetter() == PieceLetter::PAWN && board[posPiece.x + 1][posPiece.y]->getColor() != color){
-            //     // check if the pawn of the other color has just done a special move
-            //     if (board[posPiece.x + 1][posPiece.y]->getHasMoved() == HasMoved::FIRST){
-            //         moves.push_back(Move(posPiece.x + 1, posPiece.y, MoveType::PASSANT));
-            //     }
-            // }
         }else if (piece->getLetter() == PieceLetter::KING){
             // if the piece is a king check if he can do a special move CASTLING
         }
