@@ -57,7 +57,6 @@ namespace pieces {
         cout << "lastMove->x : " << lastMove.x << endl;
         cout << "lastMove->y : " << lastMove.y << endl;
         cout << "lastMove->type : " << lastMove.type << endl;
-        cout << "pawn detected" << endl;
         cout << "posPiece.x : " << posPiece.x << endl;
         cout << "posPiece.y : " << posPiece.y << endl;
         Piece* piece = board[posPiece.x][posPiece.y];
@@ -71,7 +70,35 @@ namespace pieces {
                 moves.push_back(Move(posPiece.x + 1, color == PieceColor::WHITE ? posPiece.y-1 : posPiece.y+1, MoveType::PASSANT));
             }
         }else if (piece->getLetter() == PieceLetter::KING){
+            cout << "king detected" << endl;
             // if the piece is a king check if he can do a special move CASTLING
+            if (!piece->getHasMoved()){
+                // check if the rook on the left or on the right of the king has not moved
+                if (board[0][piece->getColor() == PieceColor::WHITE ? 7 : 0] != nullptr && board[0][piece->getColor() == PieceColor::WHITE ? 7 : 0]->getLetter() == PieceLetter::ROOK && !board[0][piece->getColor() == PieceColor::WHITE ? 7 : 0]->getHasMoved()){
+                    // check if the king can move to the left
+                    bool canMove = true;
+                    for (int i = 1; i < 4; i++){
+                        if (board[i][piece->getColor() == PieceColor::WHITE ? 7 : 0] != nullptr){
+                            canMove = false;
+                        }
+                    }
+                    if (canMove){
+                        moves.push_back(Move(2, piece->getColor() == PieceColor::WHITE ? 7 : 0, MoveType::CASTLING));
+                    }
+                }
+                if (board[7][piece->getColor() == PieceColor::WHITE ? 7 : 0] != nullptr && board[7][piece->getColor() == PieceColor::WHITE ? 7 : 0]->getLetter() == PieceLetter::ROOK && !board[7][piece->getColor() == PieceColor::WHITE ? 7 : 0]->getHasMoved()){
+                    // check if the king can move to the right
+                    bool canMove = true;
+                    for (int i = 5; i < 7; i++){
+                        if (board[i][piece->getColor() == PieceColor::WHITE ? 7 : 0] != nullptr){
+                            canMove = false;
+                        }
+                    }
+                    if (canMove){
+                        moves.push_back(Move(6, piece->getColor() == PieceColor::WHITE ? 7 : 0, MoveType::CASTLING));
+                    }
+                }
+            }
         }
         return moves;
     }

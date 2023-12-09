@@ -131,6 +131,17 @@ void Board::update(EventManager &eventmanager) {
                             cout << "passant" << endl;
                             cases[casePos.first][selectedCase->y].piece = nullptr;
                         }
+                        else if (moveElem.type == pieces::MoveType::CASTLING){
+                            cout << "castling" << endl;
+                            if (casePos.first == 6){
+                                cases[5][casePos.second].piece = cases[7][casePos.second].piece;
+                                cases[7][casePos.second].piece = nullptr;
+                            }else if (casePos.first == 2){
+                                cases[3][casePos.second].piece = cases[0][casePos.second].piece;
+                                cases[0][casePos.second].piece = nullptr;
+                            }
+
+                        }
                         selectedCase = nullptr;
 
                         
