@@ -10,6 +10,9 @@
 #include "event_manager.hpp"
 #include "render_window.hpp"
 
+#include "controller.hpp"
+#include "controllerPlayer.hpp"
+
 
 #include <list>
 
@@ -21,11 +24,22 @@ struct Case{
     pieces::Piece* piece;
 };
 
+enum class PartyType{
+    PVP,
+    PVE,
+    EVE
+};
+
+struct PartyConfig{
+    PartyType type;
+    string whiteController;
+    string blackController;
+};
 
 
 class Board : public Entity{
     public:
-        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE,SDL_Texture* ATTACK_FILE);
+        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE,SDL_Texture* ATTACK_FILE,EventManager &eventmanager, PartyConfig config);
 
 
         void update(EventManager &eventManager);
@@ -68,5 +82,9 @@ class Board : public Entity{
         bool promotion = false;
         Vector2f promotionPos;
         pieces::Piece* promotionPieces[8];
+
+        // controller
+        Controller* controllerWhite;
+        Controller* controllerBlack;
 
 };

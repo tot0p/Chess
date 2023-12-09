@@ -10,7 +10,7 @@
 class GameScene : public Scene
 {
     public:
-        GameScene(RenderWindow &window) : board(
+        GameScene(RenderWindow &window,EventManager &eventManager) : board(
         Vector2f(WINDOW_WIDTH / (2 * SCALE_FACTOR) - BOARD_WIDTH / 2, WINDOW_HEIGHT / (2 * SCALE_FACTOR) - BOARD_HEIGHT / 2),
         window.loadTexture(BOARD_FILE),
         BOARD_WIDTH,BOARD_HEIGHT,
@@ -18,7 +18,9 @@ class GameScene : public Scene
         window.loadTexture(PIECES_FILE),
         window.loadTexture(SELECTED_FILE),
         window.loadTexture(GREEN_FILE),
-        window.loadTexture(RED_FILE)
+        window.loadTexture(RED_FILE),
+        eventManager,
+        PartyConfig{PartyType::PVP,"Player","Player"}
         ) {
         }
         void update(EventManager &eventManager) override {

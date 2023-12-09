@@ -11,10 +11,11 @@
 #include "font.hpp"
 #include <iostream>
 
+
 using namespace std;
 
-Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset) , lastMove() , history()
+Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE,EventManager &eventmanager ,  PartyConfig config) 
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset) , lastMove() , history() ,controllerWhite(nullptr), controllerBlack(nullptr)
 {       
 
     
@@ -36,6 +37,12 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
     TurnOfWhiteText = font.createTextEntity("Turn of white",window,posTurn);
     TurnOfBlackText = font.createTextEntity("Turn of black",window,posTurn);
     
+    // controller
+    if (config.type == PartyType::PVP) {
+        controllerWhite = new ControllerPlayer(eventmanager);
+        controllerBlack = new ControllerPlayer(eventmanager);
+    }
+
 
 }
 
@@ -101,22 +108,17 @@ list<pieces::Piece*> Board::getAllPieces() {
 
 
 void Board::update(EventManager &eventmanager) {
-    // get click one click
-    bool OneClick = false;
-    if (eventmanager.isLeftClick())
-    {
-        Click = true;
-    }else if (!eventmanager.isLeftClick() && Click)
-    {
-        Click = false;
-        OneClick = true;
+    
+    pair<int , int> mousePos ;
+
+    if (TurnOfWhite) {
+        mousePos = controllerWhite->Interact(getBoard());
+    }else{
+        mousePos = controllerBlack->Interact(getBoard());
     }
 
-
     // interaction with the board
-    if (OneClick){
-        // get mouse position
-        pair<int,int> mousePos = eventmanager.getMousePosition();
+    if (mousePos.first != -1 && mousePos.second != -1){
         // get case position
         pair<int,int> casePos = clickON(mousePos);
         // if not out of the board
@@ -135,7 +137,6 @@ void Board::update(EventManager &eventmanager) {
                     }
                     promotion = false;
                     pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
-                    cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
                     if (checkOrCheckMate.second)
                     {
                         if (TurnOfWhite)
@@ -162,7 +163,6 @@ void Board::update(EventManager &eventmanager) {
                 {
                     if (moveElem.x == casePos.first && moveElem.y == casePos.second)
                     {
-                        cout << "move is :" << moveElem.x << " " << moveElem.y << " move type : " << moveElem.type << endl;
                         // move the piece
                         lastMove = moveElem;
                         selectedCase->piece->UpdateMoved();
@@ -171,11 +171,9 @@ void Board::update(EventManager &eventmanager) {
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
 
                         if (moveElem.type == pieces::MoveType::PASSANT) {
-                            cout << "passant" << endl;
                             cases[casePos.first][selectedCase->y].piece = nullptr;
                         }
                         else if (moveElem.type == pieces::MoveType::CASTLING){
-                            cout << "castling" << endl;
                             if (casePos.first == 6){
                                 cases[5][casePos.second].piece = cases[7][casePos.second].piece;
                                 cases[7][casePos.second].piece = nullptr;
@@ -193,7 +191,6 @@ void Board::update(EventManager &eventmanager) {
                         }else{
                             // check if check or checkmate
                             pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
-                            cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
                             if (checkOrCheckMate.second)
                             {
                                 if (TurnOfWhite)
@@ -295,13 +292,11 @@ void Board::render(RenderWindow &window) {
         if (TurnOfWhite){
             for (int i = 0; i < 4; i++){
                 promotionPieces[i]->setPosition(Vector2f(promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN ,promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN+ i*PIECES_HEIGHT));
-                cout << "pos : " << promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN << " " << promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN  + i*PIECES_HEIGHT << endl;
                 window.render(promotionPieces[i]);
             }
         }else{
             for (int i = 4; i < 8; i++){
                 promotionPieces[i]->setPosition(Vector2f(promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN ,promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN - (i-4)*PIECES_HEIGHT));
-                cout << "pos : " << promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN  << " " << promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN - (i-4)*PIECES_HEIGHT << endl;
                 window.render(promotionPieces[i]);
             }
         }
@@ -375,7 +370,11 @@ void Board::reset() {
     TurnOfWhite = true;
     selectedCase = nullptr;
     moves.clear();
-    // TODO reset board
+    lastMove = pieces::Move();
+    history.clear();
+    promotion = false;
+    promotionPos = Vector2f();
+
     
     DefaultBoard();
 };
