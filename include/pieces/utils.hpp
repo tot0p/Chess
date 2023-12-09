@@ -13,8 +13,7 @@ namespace pieces
         NORMAL,
         ATTACK,
         CASTLING,
-        PASSANT,
-        PROMOTION
+        PASSANT
     };
 
     struct Move

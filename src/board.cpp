@@ -7,6 +7,7 @@
 #include "pieces/queen.hpp"
 #include "pieces/king.hpp"
 #include "pieces/check_or_mate.hpp"
+#include "pieces/promote.hpp"
 #include "font.hpp"
 #include <iostream>
 
@@ -18,6 +19,16 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
 
     
     DefaultBoard();
+
+    // promotionPieces initialization
+    promotionPieces[0] = new pieces::Queen(pieces::PieceColor::WHITE , p_tileset);
+    promotionPieces[1] = new pieces::Rook( pieces::PieceColor::WHITE , p_tileset);
+    promotionPieces[2] = new pieces::Bishop(pieces::PieceColor::WHITE , p_tileset);
+    promotionPieces[3] = new pieces::Knight(pieces::PieceColor::WHITE, p_tileset);
+    promotionPieces[4] = new pieces::Queen(pieces::PieceColor::BLACK , p_tileset);
+    promotionPieces[5] = new pieces::Rook( pieces::PieceColor::BLACK , p_tileset);
+    promotionPieces[6] = new pieces::Bishop(pieces::PieceColor::BLACK , p_tileset);
+    promotionPieces[7] = new pieces::Knight(pieces::PieceColor::BLACK, p_tileset);
 
     // GUI
     Font font(FONT_FILE,16,{255,255,255,255});
@@ -111,6 +122,37 @@ void Board::update(EventManager &eventmanager) {
         // if not out of the board
         if (casePos.first != -1 && casePos.second != -1)
         {
+            if (promotion){
+                if (casePos.first == promotionPos.x){
+                    if (casePos.second == promotionPos.y){
+                        cases[(int)promotionPos.x][(int)promotionPos.y].piece = promotionPieces[ TurnOfWhite ? 0 : 4];
+                    }else if (casePos.second == promotionPos.y + ( TurnOfWhite ? 1 : -1)){
+                        cases[(int)promotionPos.x][(int)promotionPos.y].piece = promotionPieces[ TurnOfWhite ? 1 : 5];
+                    }else if (casePos.second == promotionPos.y + ( TurnOfWhite ? 2 : -2)){
+                        cases[(int)promotionPos.x][(int)promotionPos.y].piece = promotionPieces[ TurnOfWhite ? 2 : 6];
+                    }else if (casePos.second == promotionPos.y + ( TurnOfWhite ? 3 : -3)){
+                        cases[(int)promotionPos.x][(int)promotionPos.y].piece = promotionPieces[ TurnOfWhite ? 3 : 7];
+                    }
+                    promotion = false;
+                    pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
+                    cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
+                    if (checkOrCheckMate.second)
+                    {
+                        if (TurnOfWhite)
+                        {
+                            // Win page for white
+                            eventmanager.changeScene(2);
+                        }
+                        else
+                        {   
+                            // Win page for black
+                            eventmanager.changeScene(3);
+                        }
+                    }
+                    TurnOfWhite = !TurnOfWhite;
+
+                }
+            }else
             // if a piece is selected
             if (selectedCase != nullptr)
             {
@@ -145,24 +187,30 @@ void Board::update(EventManager &eventmanager) {
                         }
                         selectedCase = nullptr;
 
-                        
-                        // check if check or checkmate
-                        pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
-                        cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
-                        if (checkOrCheckMate.second)
-                        {
-                            if (TurnOfWhite)
+                        if (pieces::promote(Vector2f(casePos.first,casePos.second),getBoard())){
+                            promotion = true;
+                            promotionPos = Vector2f(casePos.first,casePos.second);
+                        }else{
+                            // check if check or checkmate
+                            pair<bool,bool> checkOrCheckMate = isCheckOrCheckMate();
+                            cout << "Check" << checkOrCheckMate.first << "CheckMate" << checkOrCheckMate.second << endl;
+                            if (checkOrCheckMate.second)
                             {
-                                // Win page for white
-                                eventmanager.changeScene(2);
+                                if (TurnOfWhite)
+                                {
+                                    // Win page for white
+                                    eventmanager.changeScene(2);
+                                }
+                                else
+                                {   
+                                    // Win page for black
+                                    eventmanager.changeScene(3);
+                                }
                             }
-                            else
-                            {   
-                                // Win page for black
-                                eventmanager.changeScene(3);
-                            }
+                            TurnOfWhite = !TurnOfWhite;
                         }
-                        TurnOfWhite = !TurnOfWhite;
+                        
+                        
                         // update the board
                         moves.clear();
                         isMove = true;
@@ -240,6 +288,23 @@ void Board::render(RenderWindow &window) {
     else
     {
         window.render(TurnOfBlackText);
+    }
+
+    if (promotion){
+
+        if (TurnOfWhite){
+            for (int i = 0; i < 4; i++){
+                promotionPieces[i]->setPosition(Vector2f(promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN ,promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN+ i*PIECES_HEIGHT));
+                cout << "pos : " << promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN << " " << promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN  + i*PIECES_HEIGHT << endl;
+                window.render(promotionPieces[i]);
+            }
+        }else{
+            for (int i = 4; i < 8; i++){
+                promotionPieces[i]->setPosition(Vector2f(promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN ,promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN - (i-4)*PIECES_HEIGHT));
+                cout << "pos : " << promotionPos.x*PIECES_WIDTH + getPosition().x + BOARD_MARGIN  << " " << promotionPos.y*PIECES_HEIGHT + getPosition().y + BOARD_MARGIN - (i-4)*PIECES_HEIGHT << endl;
+                window.render(promotionPieces[i]);
+            }
+        }
     }
 }
 

@@ -63,4 +63,10 @@ class Board : public Entity{
         SDL_Texture* p_tileset;
         Entity* TurnOfWhiteText;
         Entity* TurnOfBlackText;
+
+        // promotion
+        bool promotion = false;
+        Vector2f promotionPos;
+        pieces::Piece* promotionPieces[8];
+
 };
