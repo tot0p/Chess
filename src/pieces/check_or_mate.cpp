@@ -42,11 +42,29 @@ namespace pieces {
         std::list<Move> authorizedMoves;
         for (Move move : moves){
             std::vector<std::vector<Piece *>> newBoard = board;
-            newBoard[move.x][move.y] = newBoard[posPiece.x][posPiece.y];
-            newBoard[posPiece.x][posPiece.y] = nullptr;
-            if (!isCheck(newBoard,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)){
-                authorizedMoves.push_back(move);
+            if (move.type == MoveType::CASTLING){
+                newBoard[move.x][move.y] = newBoard[posPiece.x][posPiece.y];
+                newBoard[posPiece.x][posPiece.y] = nullptr;
+                if (move.x == 2){
+                    newBoard[3][move.y] = newBoard[0][move.y];
+                    newBoard[0][move.y] = nullptr;
+                }else{
+                    newBoard[5][move.y] = newBoard[7][move.y];
+                    newBoard[7][move.y] = nullptr;
+                }
+
+                if (!isCheck(newBoard,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)
+                    && !isCheck(board,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)){
+                    authorizedMoves.push_back(move);
+                }
+            }else{
+                newBoard[move.x][move.y] = newBoard[posPiece.x][posPiece.y];
+                newBoard[posPiece.x][posPiece.y] = nullptr;
+                if (!isCheck(newBoard,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)){
+                    authorizedMoves.push_back(move);
+                }
             }
+            
         }
         return authorizedMoves;
      }
