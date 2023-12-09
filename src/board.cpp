@@ -13,7 +13,7 @@
 using namespace std;
 
 Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE) 
-        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset) , lastMove()
+        : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset) , lastMove() , history()
 {       
 
     
@@ -124,6 +124,7 @@ void Board::update(EventManager &eventmanager) {
                         // move the piece
                         lastMove = moveElem;
                         selectedCase->piece->UpdateMoved();
+                        addHistory(moveElem);
                         cases[casePos.first][casePos.second].piece = selectedCase->piece;
                         cases[selectedCase->x][selectedCase->y].piece = nullptr;
 
@@ -313,3 +314,30 @@ void Board::reset() {
     
     DefaultBoard();
 };
+
+void Board::addHistory(pieces::Move) {
+    string move = "";
+    if (lastMove.type == pieces::MoveType::CASTLING){
+        if (lastMove.x == 6){
+            move += "O-O";
+        }else if (lastMove.x == 2){
+            move += "O-O-O";
+        }
+       
+    }else{
+        if (selectedCase->piece->getLetter() != pieces::PieceLetter::PAWN){
+            move += selectedCase->piece->getLetter();
+        }
+        if (lastMove.type == pieces::MoveType::ATTACK){
+            move += "x";
+        }
+        move += (char)(lastMove.x + 'a');
+        move += (char)(lastMove.y + '1');
+    }
+    history.push_back(move);
+    cout << "history : " << move << endl;
+    for (auto &elem : history)
+    {
+        cout << elem << endl;
+    }
+}

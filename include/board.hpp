@@ -42,6 +42,7 @@ class Board : public Entity{
         pair<bool,bool> isCheckOrCheckMate();
 
         void DefaultBoard();
+        void addHistory(pieces::Move move);
 
         Case cases[8][8] ;
         Case* selectedCase = nullptr;
@@ -53,10 +54,10 @@ class Board : public Entity{
         pieces::Move lastMove;
 
         bool Click = false;
-
         bool TurnOfWhite = true;
 
-
+        // history of moves
+        list<string> history;
 
         // GUI 
         SDL_Texture* p_tileset;
