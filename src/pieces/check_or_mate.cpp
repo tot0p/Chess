@@ -43,18 +43,28 @@ namespace pieces {
         for (Move move : moves){
             std::vector<std::vector<Piece *>> newBoard = board;
             if (move.type == MoveType::CASTLING){
-                newBoard[move.x][move.y] = newBoard[posPiece.x][posPiece.y];
-                newBoard[posPiece.x][posPiece.y] = nullptr;
+                // check if all case between the king and the rook inluded are not in check
+                bool canMove = true;
                 if (move.x == 2){
-                    newBoard[3][move.y] = newBoard[0][move.y];
-                    newBoard[0][move.y] = nullptr;
+                    for (int i = 0; i <= 4; i++){
+                        newBoard= board;
+                        newBoard[i][posPiece.y] = newBoard[posPiece.x][posPiece.y];
+                        newBoard[posPiece.x][posPiece.y] = nullptr;
+                        if (isCheck(newBoard,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)){
+                            canMove = false;
+                        }
+                    }
                 }else{
-                    newBoard[5][move.y] = newBoard[7][move.y];
-                    newBoard[7][move.y] = nullptr;
+                    for (int i = 4; i <= 7; i++){
+                        newBoard= board;
+                        newBoard[i][posPiece.y] = newBoard[posPiece.x][posPiece.y];
+                        newBoard[posPiece.x][posPiece.y] = nullptr;
+                        if (isCheck(newBoard,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)){
+                            canMove = false;
+                        }
+                    }
                 }
-
-                if (!isCheck(newBoard,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)
-                    && !isCheck(board,color == PieceColor::WHITE ? PieceColor::BLACK : PieceColor::WHITE)){
+                if (canMove){
                     authorizedMoves.push_back(move);
                 }
             }else{
@@ -80,7 +90,6 @@ namespace pieces {
         Piece* piece = board[posPiece.x][posPiece.y];
         // if the piece is a pawn check if he can do a special move PASSANT
         if (piece->getLetter() == PieceLetter::PAWN && lastMove.type != MoveType::NONE && board[lastMove.x][lastMove.y]->getLetter() == PieceLetter::PAWN && board[lastMove.x][lastMove.y]->getColor() != color ){
-            cout << "pawn detected" << endl;
             // check if are a pawn of the other color on the left or on the right
             if (posPiece.x -1 >= 0 && lastMove.x == posPiece.x - 1 && lastMove.y == posPiece.y){
                 moves.push_back(Move(posPiece.x - 1, color == PieceColor::WHITE ? posPiece.y-1 : posPiece.y+1, MoveType::PASSANT));
@@ -88,7 +97,6 @@ namespace pieces {
                 moves.push_back(Move(posPiece.x + 1, color == PieceColor::WHITE ? posPiece.y-1 : posPiece.y+1, MoveType::PASSANT));
             }
         }else if (piece->getLetter() == PieceLetter::KING){
-            cout << "king detected" << endl;
             // if the piece is a king check if he can do a special move CASTLING
             if (!piece->getHasMoved()){
                 // check if the rook on the left or on the right of the king has not moved
