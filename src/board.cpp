@@ -49,6 +49,11 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
         controllerWhite->setPosition(getPosition());
         controllerBlack = new ControllerLua(false , "assets/ai/dumb.lua");
         controllerBlack->setPosition(getPosition());
+    }else if (config.type == PartyType::EVE) {
+        controllerWhite = new ControllerLua(true , "assets/ai/dumb.lua");
+        controllerWhite->setPosition(getPosition());
+        controllerBlack = new ControllerLua(false , "assets/ai/dumb.lua");
+        controllerBlack->setPosition(getPosition());
     }
 
     moves = std::list<pieces::Move>();
@@ -395,9 +400,9 @@ void Board::addHistory(pieces::Move) {
         move += (char)(lastMove.y + '1');
     }
     history.push_back(move);
-    cout << "history : " << move << endl;
-    for (auto &elem : history)
-    {
-        cout << elem << endl;
-    }
+    // cout << "history : " << move << endl;
+    // for (auto &elem : history)
+    // {
+    //     cout << elem << endl;
+    // }
 }
