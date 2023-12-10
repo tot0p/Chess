@@ -15,7 +15,7 @@ pair<int,int> ControllerPlayer::Interact(vector<vector<pieces::Piece*>> board)
 
     if (OneClick)
     {
-        return eventManager.getMousePosition();
+        return clickOn(eventManager.getMousePosition());
     }else
     {
         return make_pair(-1,-1);

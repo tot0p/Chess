@@ -49,7 +49,6 @@ class Board : public Entity{
         vector<vector<pieces::Piece*>> getBoard();
 
     private:
-        pair<int,int> clickON(pair<int,int> mousePos);
         list<pieces::Piece*> getAllPieces();
 
         pieces::BoardLetter getBoardLetter();
@@ -67,7 +66,6 @@ class Board : public Entity{
         list<pieces::Move> moves;
         pieces::Move lastMove;
 
-        bool Click = false;
         bool TurnOfWhite = true;
 
         // history of moves

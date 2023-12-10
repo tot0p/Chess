@@ -39,8 +39,10 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
     
     // controller
     if (config.type == PartyType::PVP) {
-        controllerWhite = new ControllerPlayer(eventmanager);
-        controllerBlack = new ControllerPlayer(eventmanager);
+        controllerWhite = new ControllerPlayer(true,eventmanager);
+        controllerWhite->setPosition(getPosition());
+        controllerBlack = new ControllerPlayer(true,eventmanager);
+        controllerBlack->setPosition(getPosition());
     }
 
 
@@ -109,18 +111,13 @@ list<pieces::Piece*> Board::getAllPieces() {
 
 void Board::update(EventManager &eventmanager) {
     
-    pair<int , int> mousePos ;
+    pair<int,int> casePos;
 
     if (TurnOfWhite) {
-        mousePos = controllerWhite->Interact(getBoard());
+        casePos = controllerWhite->Interact(getBoard());
     }else{
-        mousePos = controllerBlack->Interact(getBoard());
+        casePos = controllerBlack->Interact(getBoard());
     }
-
-    // interaction with the board
-    if (mousePos.first != -1 && mousePos.second != -1){
-        // get case position
-        pair<int,int> casePos = clickON(mousePos);
         // if not out of the board
         if (casePos.first != -1 && casePos.second != -1)
         {
@@ -235,7 +232,6 @@ void Board::update(EventManager &eventmanager) {
             }
 
         }
-    }
 
     //get moves possible
     if (selectedCase != nullptr && moves.empty()){
@@ -303,19 +299,6 @@ void Board::render(RenderWindow &window) {
     }
 }
 
-pair<int,int> Board::clickON(pair<int,int> mousePos){
-    Vector2f pos = getPosition();
-    int x = mousePos.first - pos.x *SCALE_FACTOR - BOARD_MARGIN *SCALE_FACTOR;
-    int y = mousePos.second - pos.y *SCALE_FACTOR - BOARD_MARGIN *SCALE_FACTOR;
-    if (x < 0 || y < 0 || x > 8*PIECES_WIDTH*SCALE_FACTOR|| y > 8*PIECES_HEIGHT*SCALE_FACTOR)
-    {
-        return make_pair(-1,-1);
-    }
-    else
-    {
-        return make_pair(x/(PIECES_WIDTH*SCALE_FACTOR), y/(PIECES_HEIGHT*SCALE_FACTOR));
-    }
-}
 
 pieces::BoardLetter Board::getBoardLetter(){
     pieces::BoardLetter boardLetter;
@@ -366,7 +349,6 @@ pair<bool,bool> Board::isCheckOrCheckMate() {
 }
 
 void Board::reset() {
-    Click = false;
     TurnOfWhite = true;
     selectedCase = nullptr;
     moves.clear();
@@ -374,6 +356,10 @@ void Board::reset() {
     history.clear();
     promotion = false;
     promotionPos = Vector2f();
+
+    controllerWhite->reset();
+    controllerBlack->reset();
+
 
     
     DefaultBoard();
