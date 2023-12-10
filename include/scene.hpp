@@ -14,7 +14,7 @@ class Scene
         virtual void update(EventManager &eventManager) { std::cout << "Scene::update" << std::endl;};
         virtual void render(RenderWindow &window) { std::cout << "Scene::render" << std::endl;};
 
-        virtual void reset() { std::cout << "Scene::reset" << std::endl;};
+        virtual void reset() {};
     
 };
 
