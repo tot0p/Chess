@@ -50,4 +50,16 @@ constexpr char *QUIT_FILE = "assets/quit.png";
 constexpr int QUIT_WIDTH = 64;
 constexpr int QUIT_HEIGHT = 16;
 
+constexpr char *PVP_FILE = "assets/pvp.png";
+constexpr int PVP_WIDTH = 64;
+constexpr int PVP_HEIGHT = 16;
+
+constexpr char *PVE_FILE = "assets/pve.png";
+constexpr int PVE_WIDTH = 64;
+constexpr int PVE_HEIGHT = 16;
+
+constexpr char *EVE_FILE = "assets/eve.png";
+constexpr int EVE_WIDTH = 64;
+constexpr int EVE_HEIGHT = 16;
+
 
