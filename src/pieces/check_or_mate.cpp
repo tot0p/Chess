@@ -81,12 +81,6 @@ namespace pieces {
 
     std::list<Move> addSpecialMoves(Vector2f posPiece,std::list<Move> moves,std::vector<std::vector<Piece *>> board,PieceColor color,Move lastMove)
     {
-        
-        cout << "lastMove->x : " << lastMove.x << endl;
-        cout << "lastMove->y : " << lastMove.y << endl;
-        cout << "lastMove->type : " << lastMove.type << endl;
-        cout << "posPiece.x : " << posPiece.x << endl;
-        cout << "posPiece.y : " << posPiece.y << endl;
         Piece* piece = board[posPiece.x][posPiece.y];
         // if the piece is a pawn check if he can do a special move PASSANT
         if (piece->getLetter() == PieceLetter::PAWN && lastMove.type != MoveType::NONE && board[lastMove.x][lastMove.y]->getLetter() == PieceLetter::PAWN && board[lastMove.x][lastMove.y]->getColor() != color ){
