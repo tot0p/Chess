@@ -13,7 +13,7 @@
 ### windows
 
 ```bash
-g++ -O2 src/*.cpp src/pieces/*.cpp -o bin/release/chess -IC:/SDL2/include -Iinclude -LC:/SDL2/lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -mwindows
+g++ -O2 src/*.cpp src/pieces/*.cpp -o bin/release/chess -IC:/SDL2/include -IC:/lua/include -Iinclude -LC:/SDL2/lib -LC:/lua/lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -llua54 -mwindows
 ```
 
 

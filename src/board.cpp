@@ -10,6 +10,7 @@
 #include "pieces/promote.hpp"
 #include "font.hpp"
 #include <iostream>
+#include "controllerLua.hpp"
 
 
 using namespace std;
@@ -42,6 +43,11 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
         controllerWhite = new ControllerPlayer(true,eventmanager);
         controllerWhite->setPosition(getPosition());
         controllerBlack = new ControllerPlayer(true,eventmanager);
+        controllerBlack->setPosition(getPosition());
+    }else if (config.type == PartyType::PVE) {
+        controllerWhite = new ControllerPlayer(true,eventmanager);
+        controllerWhite->setPosition(getPosition());
+        controllerBlack = new ControllerLua(false , "assets/ai/test.lua");
         controllerBlack->setPosition(getPosition());
     }
 
