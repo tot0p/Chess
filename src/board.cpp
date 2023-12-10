@@ -47,7 +47,7 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
     }else if (config.type == PartyType::PVE) {
         controllerWhite = new ControllerPlayer(true,eventmanager);
         controllerWhite->setPosition(getPosition());
-        controllerBlack = new ControllerLua(false , "assets/ai/test.lua");
+        controllerBlack = new ControllerLua(false , "assets/ai/dumb.lua");
         controllerBlack->setPosition(getPosition());
     }
 
@@ -126,9 +126,11 @@ void Board::update(EventManager &eventmanager) {
     }else{
         casePos = controllerBlack->Interact(getBoard(),moves);
     }
+
         // if not out of the board
         if (casePos.first != -1 && casePos.second != -1)
         {
+
             if (promotion){
                 if (casePos.first == promotionPos.x){
                     if (casePos.second == promotionPos.y){

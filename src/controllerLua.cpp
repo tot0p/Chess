@@ -64,7 +64,7 @@ pair<int,int> ControllerLua::Interact(vector<vector<pieces::Piece*>> board,list<
             i++;
         }
     } else {
-        lua_pushstring(L, "ntm");
+        lua_pushnil(L);
     }
 
     // execute the function
