@@ -8,7 +8,7 @@
 class ControllerPlayer : public Controller {
 public:
     ControllerPlayer(bool isWhite,EventManager &eventManager) : eventManager(eventManager) , Controller(isWhite,ControllerType::PLAYER) {};
-    pair<int,int> Interact(vector<vector<pieces::Piece*>> board);
+    pair<int,int> Interact(vector<vector<pieces::Piece*>> board,list<pieces::Move> movesPos);
     void reset() { Click = false; }
 
 private:

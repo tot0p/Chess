@@ -51,6 +51,8 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
         controllerBlack->setPosition(getPosition());
     }
 
+    moves = std::list<pieces::Move>();
+
 
 }
 
@@ -120,9 +122,9 @@ void Board::update(EventManager &eventmanager) {
     pair<int,int> casePos;
 
     if (TurnOfWhite) {
-        casePos = controllerWhite->Interact(getBoard());
+        casePos = controllerWhite->Interact(getBoard(),moves);
     }else{
-        casePos = controllerBlack->Interact(getBoard());
+        casePos = controllerBlack->Interact(getBoard(),moves);
     }
         // if not out of the board
         if (casePos.first != -1 && casePos.second != -1)

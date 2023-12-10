@@ -20,7 +20,7 @@ class GameScene : public Scene
         window.loadTexture(GREEN_FILE),
         window.loadTexture(RED_FILE),
         eventManager,
-        PartyConfig{PartyType::PVP,"Player","Player"}
+        PartyConfig{PartyType::PVE,"Player","Player"}
         ) {
         }
         void update(EventManager &eventManager) override {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <list>
 
 #include "pieces/piece.hpp"
 #include "math.hpp"
@@ -17,7 +18,7 @@ class Controller {
 public:
     Controller(bool isWhite,ControllerType type) : isWhite(isWhite), type(type) {}
 
-    pair<int,int> virtual Interact(vector<vector<pieces::Piece*>> board) = 0;
+    pair<int,int> virtual Interact(vector<vector<pieces::Piece*>> board,list<pieces::Move> movesPos) = 0;
 
     bool getIsWhite() const { return isWhite; }
     ControllerType getType() const { return type; }

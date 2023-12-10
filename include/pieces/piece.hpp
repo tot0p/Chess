@@ -30,6 +30,8 @@ namespace pieces{
             virtual char getLetter() const { return PieceLetter::EMPTY; }
             PieceColor getColor() const { return color; }
 
+            virtual std::string getName() const { return "Piece"; }
+
             void UpdateMoved() { hasMoved = true;}
             bool getHasMoved() const { return hasMoved; }
 

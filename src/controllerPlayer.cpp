@@ -1,7 +1,7 @@
 #include "controllerPlayer.hpp"
 
 
-pair<int,int> ControllerPlayer::Interact(vector<vector<pieces::Piece*>> board)
+pair<int,int> ControllerPlayer::Interact(vector<vector<pieces::Piece*>> board,list<pieces::Move> movesPos)
 {
     bool OneClick = false;
     if (eventManager.isLeftClick())
