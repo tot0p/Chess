@@ -24,7 +24,8 @@ void MainMenu::update(EventManager &eventManager)  {
         mousePos.first /= SCALE_FACTOR;
         mousePos.second /= SCALE_FACTOR;
         if (mousePos.first >= play.getPosition().x && mousePos.first <= play.getPosition().x  + play.getWidth() && mousePos.second >= play.getPosition().y && mousePos.second <= play.getPosition().y + play.getHeight() ) {
-            eventManager.changeScene(1);
+            eventManager.changeScene(4);
+            eventManager.CancelLeftClick();
         }else if (mousePos.first >= quit.getPosition().x && mousePos.first <= quit.getPosition().x + quit.getWidth() && mousePos.second >= quit.getPosition().y && mousePos.second <= quit.getPosition().y + quit.getHeight()) {
             eventManager.quit();
         }

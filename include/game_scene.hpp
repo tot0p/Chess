@@ -19,8 +19,7 @@ class GameScene : public Scene
         window.loadTexture(SELECTED_FILE),
         window.loadTexture(GREEN_FILE),
         window.loadTexture(RED_FILE),
-        eventManager,
-        PartyConfig{PartyType::PVP,"Player","Player"}
+        eventManager
         ) {
         }
         void update(EventManager &eventManager) override {
@@ -29,8 +28,8 @@ class GameScene : public Scene
         void render(RenderWindow &window) override {
             board.render(window);
         }
-        void reset() override {
-            board.reset();
+        void reset(EventManager &eventManager) override {
+            board.reset(eventManager);
         }
     private:
         Board board;

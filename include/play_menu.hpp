@@ -8,10 +8,12 @@ class PlayMenu : public Scene
         PlayMenu(RenderWindow &window);
         void update(EventManager &eventManager) override;
         void render(RenderWindow &window) override;
+        void reset(EventManager &eventManager) override { click = false; }
     private:
         Entity* title;
         Entity pvp;
         Entity pve;
         Entity eve;
         Entity back;
+        bool click = false;
 };

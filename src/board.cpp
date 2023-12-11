@@ -15,7 +15,7 @@
 
 using namespace std;
 
-Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE,EventManager &eventmanager ,  PartyConfig config) 
+Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight ,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE , SDL_Texture* MOVE_FILE , SDL_Texture* ATTACK_FILE,EventManager &eventmanager ) 
         : Entity(pos, p_texture, frameWidth, frameHeight), selectedEntity(pos, SELECTED_FILE, SELECTED_WIDTH, SELECTED_HEIGHT), move(pos, MOVE_FILE,SELECTED_WIDTH, SELECTED_HEIGHT) , attack(pos,ATTACK_FILE,SELECTED_WIDTH,SELECTED_HEIGHT) , TurnOfWhiteText(nullptr), TurnOfBlackText(nullptr), p_tileset(p_tileset) , lastMove() , history() ,controllerWhite(nullptr), controllerBlack(nullptr)
 {       
 
@@ -38,6 +38,8 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
     TurnOfWhiteText = font.createTextEntity("Turn of white",window,posTurn);
     TurnOfBlackText = font.createTextEntity("Turn of black",window,posTurn);
     
+    PartyConfig config = eventmanager.getConfig();
+
     // controller
     if (config.type == PartyType::PVP) {
         controllerWhite = new ControllerPlayer(true,eventmanager);
@@ -363,7 +365,7 @@ pair<bool,bool> Board::isCheckOrCheckMate() {
     return make_pair(isCheck, isCheckMate);
 }
 
-void Board::reset() {
+void Board::reset(EventManager &eventManager) {
     TurnOfWhite = true;
     selectedCase = nullptr;
     moves.clear();
@@ -375,7 +377,25 @@ void Board::reset() {
     controllerWhite->reset();
     controllerBlack->reset();
 
+    PartyConfig config = eventManager.getConfig();
 
+    // controller
+    if (config.type == PartyType::PVP) {
+        controllerWhite = new ControllerPlayer(true,eventManager);
+        controllerWhite->setPosition(getPosition());
+        controllerBlack = new ControllerPlayer(true,eventManager);
+        controllerBlack->setPosition(getPosition());
+    }else if (config.type == PartyType::PVE) {
+        controllerWhite = new ControllerPlayer(true,eventManager);
+        controllerWhite->setPosition(getPosition());
+        controllerBlack = new ControllerLua(false , "assets/ai/dumb.lua");
+        controllerBlack->setPosition(getPosition());
+    }else if (config.type == PartyType::EVE) {
+        controllerWhite = new ControllerLua(true , "assets/ai/dumb.lua");
+        controllerWhite->setPosition(getPosition());
+        controllerBlack = new ControllerLua(false , "assets/ai/dumb.lua");
+        controllerBlack->setPosition(getPosition());
+    }
     
     DefaultBoard();
 };
@@ -400,9 +420,4 @@ void Board::addHistory(pieces::Move) {
         move += (char)(lastMove.y + '1');
     }
     history.push_back(move);
-    // cout << "history : " << move << endl;
-    // for (auto &elem : history)
-    // {
-    //     cout << elem << endl;
-    // }
 }

@@ -24,27 +24,19 @@ struct Case{
     pieces::Piece* piece;
 };
 
-enum class PartyType{
-    PVP,
-    PVE,
-    EVE
-};
 
-struct PartyConfig{
-    PartyType type;
-    string whiteController;
-    string blackController;
-};
+
+
 
 
 class Board : public Entity{
     public:
-        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE,SDL_Texture* ATTACK_FILE,EventManager &eventmanager, PartyConfig config);
+        Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE,SDL_Texture* ATTACK_FILE,EventManager &eventmanager);
 
 
         void update(EventManager &eventManager);
         void render(RenderWindow &window);
-        void reset();
+        void reset(EventManager &eventManager);
 
         vector<vector<pieces::Piece*>> getBoard();
 

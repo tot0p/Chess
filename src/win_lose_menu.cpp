@@ -23,7 +23,8 @@ void WinLoseMenu::update(EventManager &EventManager)
         mousePos.first /= SCALE_FACTOR;
         mousePos.second /= SCALE_FACTOR;
         if (mousePos.first >= playAgain.getPosition().x && mousePos.first <= playAgain.getPosition().x  + playAgain.getWidth() && mousePos.second >= playAgain.getPosition().y && mousePos.second <= playAgain.getPosition().y + playAgain.getHeight() ) {
-            EventManager.changeScene(1);
+            EventManager.changeScene(4);
+            EventManager.CancelLeftClick();
         }else if (mousePos.first >= quit.getPosition().x && mousePos.first <= quit.getPosition().x + quit.getWidth() && mousePos.second >= quit.getPosition().y && mousePos.second <= quit.getPosition().y + quit.getHeight()) {
             EventManager.quit();
         }

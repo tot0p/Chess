@@ -62,4 +62,8 @@ constexpr char *EVE_FILE = "assets/eve.png";
 constexpr int EVE_WIDTH = 64;
 constexpr int EVE_HEIGHT = 16;
 
+constexpr char *BACK_FILE = "assets/back.png";
+constexpr int BACK_WIDTH = 64;
+constexpr int BACK_HEIGHT = 16;
+
 
