@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 #include "entity.hpp"
 #include "pieces/piece.hpp"
@@ -32,7 +33,7 @@ struct Case{
 class Board : public Entity{
     public:
         Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeight,RenderWindow &window , SDL_Texture* p_tileset, SDL_Texture* SELECTED_FILE,SDL_Texture* MOVE_FILE,SDL_Texture* ATTACK_FILE,EventManager &eventmanager);
-
+        ~Board();
 
         void update(EventManager &eventManager);
         void render(RenderWindow &window);
@@ -77,4 +78,9 @@ class Board : public Entity{
         Controller* controllerWhite;
         Controller* controllerBlack;
 
+        // son
+        Mix_Chunk* moveSound;
+        Mix_Chunk* attackSound;
+
 };
+

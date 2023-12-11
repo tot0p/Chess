@@ -82,24 +82,3 @@ void Game::cleanUp()
 }
 
 
-// Charge une musique
-Mix_Music *Game::loadMusic(const char *filePath)
-{
-    Mix_Music *music = Mix_LoadMUS(filePath);
-    if (!music)
-    {
-        std::cerr << "Failed to load music! SDL_mixer Error: " << Mix_GetError() << std::endl;
-    }
-    return music;
-}
-
-
-Mix_Chunk *Game::loadSound(const char *filePath)
-{
-    Mix_Chunk *soundEffect = Mix_LoadWAV(filePath);
-    if (!soundEffect)
-    {
-        std::cerr << "Failed to load sound effect! SDL_mixer Error: " << Mix_GetError() << std::endl;
-    }
-    return soundEffect;
-}

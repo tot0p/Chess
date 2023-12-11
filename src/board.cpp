@@ -9,9 +9,9 @@
 #include "pieces/check_or_mate.hpp"
 #include "pieces/promote.hpp"
 #include "font.hpp"
-#include <iostream>
 #include "controllerLua.hpp"
-
+#include "song.hpp"
+#include "constants.hpp"
 
 using namespace std;
 
@@ -60,7 +60,17 @@ Board::Board(Vector2f pos, SDL_Texture* p_texture, int frameWidth, int frameHeig
 
     moves = std::list<pieces::Move>();
 
+    // song
+    moveSound = loadSound(MOVE_SOUND_FILE);
+    attackSound = loadSound(CAPTURE_SOUND_FILE);
 
+}
+
+Board::~Board() {
+    Mix_FreeChunk(moveSound);
+    Mix_FreeChunk(attackSound);
+    moveSound = nullptr;
+    attackSound = nullptr;
 }
 
 void Board::DefaultBoard() {
@@ -198,6 +208,18 @@ void Board::update(EventManager &eventmanager) {
 
                         }
                         selectedCase = nullptr;
+
+                        if (moveElem.type == pieces::MoveType::ATTACK){
+                            if (Mix_PlayChannel(-1, attackSound, 0) == -1)
+                            {
+                                std::cerr << "Error playing sound: " << Mix_GetError() << std::endl;
+                            }
+                        }else{
+                            if (Mix_PlayChannel(-1, moveSound, 0) == -1)
+                            {
+                                std::cerr << "Error playing sound: " << Mix_GetError() << std::endl;
+                            }
+                        }
 
                         if (pieces::promote(Vector2f(casePos.first,casePos.second),getBoard())){
                             promotion = true;

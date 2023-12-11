@@ -19,8 +19,7 @@ public:
     ~Game(); // Ajout du destructeur
     void run();
 
-    Mix_Music* loadMusic(const char *filePath);
-    Mix_Chunk *loadSound(const char *filePath);
+    
 
 
 private:

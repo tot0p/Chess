@@ -67,3 +67,5 @@ constexpr int BACK_WIDTH = 64;
 constexpr int BACK_HEIGHT = 16;
 
 
+constexpr char *MOVE_SOUND_FILE = "assets/sounds/move.wav";
+constexpr char *CAPTURE_SOUND_FILE = "assets/sounds/capture.wav";
